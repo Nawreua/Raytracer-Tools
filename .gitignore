@@ -1,0 +1,12 @@
+*~
+*.ppm
+*.swp
+*.o
+*.a
+*.so
+*.class
+*.log
+*.core
+a.out
+vgcore.*
+build/
