@@ -76,6 +76,88 @@ TEST(TupleTest, NegateTuple)
     ASSERT_EQ(-a, Tuple(-1, 2, -3, 4));
 }
 
+TEST(TupleTest, MultiplicationScalar)
+{
+    auto a = Tuple(1, -2, 3, -4);
+    ASSERT_EQ(a * 3.5, Tuple(3.5, -7, 10.5, -14));
+}
+
+TEST(TupleTest, MultiplicationFraction)
+{
+    auto a = Tuple(1, -2, 3, -4);
+    ASSERT_EQ(a * 0.5, Tuple(0.5, -1, 1.5, -2));
+}
+
+TEST(TupleTest, DivisionScalar)
+{
+    auto a = Tuple(1, -2, 3, -4);
+    ASSERT_EQ(a / 2, Tuple(0.5, -1, 1.5, -2));
+}
+
+TEST(TupleTest, MagnitudeTest1)
+{
+    auto v = vector(1, 0, 0);
+    ASSERT_FLOAT_EQ(v.magnitude(), 1);
+}
+
+TEST(TupleTest, MagnitudeTest2)
+{
+    auto v = vector(0, 1, 0);
+    ASSERT_FLOAT_EQ(v.magnitude(), 1);
+}
+
+TEST(TupleTest, MagnitudeTest3)
+{
+    auto v = vector(0, 0, 1);
+    ASSERT_FLOAT_EQ(v.magnitude(), 1);
+}
+
+TEST(TupleTest, MagnitudeTest4)
+{
+    auto v = vector(1, 2, 3);
+    ASSERT_FLOAT_EQ(v.magnitude(), sqrt(14));
+}
+
+TEST(TupleTest, MagnitudeTest5)
+{
+    auto v = vector(-1, -2, -3);
+    ASSERT_FLOAT_EQ(v.magnitude(), sqrt(14));
+}
+
+TEST(TupleTest, NormalizingVectorUnidirectional)
+{
+    auto v = vector(4, 0, 0);
+    ASSERT_EQ(v.normalize(), vector(1, 0, 0));
+}
+
+TEST(TupleTest, NormalizingVector)
+{
+    auto v = vector(1, 2, 3);
+    ASSERT_EQ(v.normalize(), vector(1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14)));
+}
+
+TEST(TupleTest, NormalizedMagnitude)
+{
+    auto v = vector(1, 2, 3);
+    auto norm = v.normalize();
+    ASSERT_FLOAT_EQ(norm.magnitude(), 1);
+}
+
+TEST(TupleTest, DotProduct)
+{
+    auto a = vector(1, 2, 3);
+    auto b = vector(2, 3, 4);
+    ASSERT_FLOAT_EQ(dot(a, b), 20);
+}
+
+TEST(TupleTest, CrossProduct)
+{
+    auto a = vector(1, 2, 3);
+    auto b = vector(2, 3, 4);
+    ASSERT_EQ(cross(a, b), vector(-1, 2, -1));
+    ASSERT_EQ(cross(b, a), vector(1, -2, 1));
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

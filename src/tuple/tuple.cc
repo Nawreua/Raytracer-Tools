@@ -8,9 +8,20 @@ namespace
     }
 }
 
-Tuple::Tuple(float x, float y, float z, int w)
+Tuple::Tuple(float x, float y, float z, float w)
     : x_(x), y_(y), z_(z), w_(w)
 {}
+
+float Tuple::magnitude()
+{
+    return sqrt(x_ * x_ + y_ * y_ + z_ * z_ + w_ * w_);
+}
+
+Tuple Tuple::normalize()
+{
+    auto magn = magnitude();
+    return Tuple(x_ / magn, y_ / magn, z_ / magn, w_ / magn);
+}
 
 Tuple& Tuple::operator+=(const Tuple& rhs)
 {
@@ -28,6 +39,36 @@ Tuple& Tuple::operator-=(const Tuple& rhs)
     z_ -= rhs.z_;
     w_ -= rhs.w_;
     return *this;
+}
+
+Tuple& Tuple::operator*=(float rhs)
+{
+    x_ *= rhs;
+    y_ *= rhs;
+    z_ *= rhs;
+    w_ *= rhs;
+    return *this;
+}
+
+Tuple& Tuple::operator/=(float rhs)
+{
+    x_ /= rhs;
+    y_ /= rhs;
+    z_ /= rhs;
+    w_ /= rhs;
+    return *this;
+}
+
+float dot(const Tuple& a, const Tuple& b)
+{
+    return a.x_ * b.x_ + a.y_ * b.y_ + a.z_ * b.z_ + a.w_ * b.w_;
+}
+
+Tuple cross(const Tuple& a, const Tuple& b)
+{
+    return vector(a.y_ * b.z_ - a.z_ * b.y_,
+            a.z_ * b.x_ - a.x_ * b.z_,
+            a.x_ * b.y_ - a.y_ * b.x_);
 }
 
 bool is_a_point(const Tuple& t)
@@ -56,6 +97,16 @@ Tuple operator-(Tuple lhs, const Tuple& rhs)
     return lhs -= rhs;
 }
 
+Tuple operator*(Tuple lhs, float rhs)
+{
+    return lhs *= rhs;
+}
+
+Tuple operator/(Tuple lhs, float rhs)
+{
+    return lhs /= rhs;
+}
+
 Tuple operator-(const Tuple& t)
 {
     return Tuple(-t.x_, -t.y_, -t.z_, -t.w_);
@@ -69,4 +120,9 @@ Tuple point(float x, float y, float z)
 Tuple vector(float x, float y, float z)
 {
     return Tuple(x, y, z, 0);
+}
+
+Tuple tuple(float x, float y, float z, float w)
+{
+    return Tuple(x, y, z, w);
 }
