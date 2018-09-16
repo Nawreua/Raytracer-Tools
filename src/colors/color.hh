@@ -6,6 +6,7 @@
 
 struct Color
 {
+    Color() = default;
     Color(float red, float green, float blue);
 
     Color& operator+=(const Color& rhs);
