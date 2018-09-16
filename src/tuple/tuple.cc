@@ -84,7 +84,7 @@ bool is_a_vector(const Tuple& t)
 bool operator==(const Tuple& lhs, const Tuple& rhs)
 {
     return equal(lhs.x_, rhs.x_) && equal(lhs.y_, rhs.y_)
-        && equal(lhs.z_, rhs.z_) && lhs.w_ == rhs.w_;
+        && equal(lhs.z_, rhs.z_) && equal(lhs.w_, rhs.w_);
 }
 
 Tuple operator+(Tuple lhs, const Tuple& rhs)
