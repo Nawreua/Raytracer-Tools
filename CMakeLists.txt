@@ -4,6 +4,7 @@ project ("The RayTracer Challenge")
 
 include_directories(src src/tuple)
 add_subdirectory(src)
+add_subdirectory(src_offside)
 set(LIBS ${LIBS} tuple)
 
 find_package(GTest REQUIRED)
