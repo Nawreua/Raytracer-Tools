@@ -2,12 +2,13 @@ cmake_minimum_required (VERSION 2.6)
 
 project ("The RayTracer Challenge")
 
-include_directories(src src/tuple src/colors src/canvas)
+include_directories(src src/tuple src/colors src/canvas src/matrix)
 add_subdirectory(src)
 add_subdirectory(src_offside)
 set(LIBS ${LIBS} tuple)
 set(LIBS ${LIBS} color)
 set(LIBS ${LIBS} canvas)
+set(LIBS ${LIBS} matrix)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
