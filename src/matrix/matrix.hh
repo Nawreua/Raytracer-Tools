@@ -16,6 +16,18 @@ class Matrix
 
         ~Matrix();
 
+        Matrix transpose() const;
+        float determinant() const;
+        Matrix submatrix(size_t row, size_t col) const;
+        float minor(size_t row, size_t col) const;
+        float cofactor(size_t row, size_t col) const;
+        
+        bool is_invertible() const;
+        Matrix inverse() const;
+
+        // BEWARE: Only 4*4 identity matrix
+        static const Matrix identity_matrix();
+
         float *operator[](size_t i);
         float *operator[](size_t i) const;
 

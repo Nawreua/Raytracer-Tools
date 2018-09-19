@@ -68,6 +68,88 @@ Matrix::Matrix(float grid[4][4])
     }
 }
 
+const Matrix Matrix::identity_matrix()
+{
+    float grid[][4] = {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
+
+Matrix Matrix::transpose() const
+{
+    Matrix transposed{width_, height_};
+    for (size_t i = 0; i < width_; i++)
+        for (size_t j = 0; j < height_; j++)
+            transposed[i][j] = grid_[j][i];
+    return transposed;
+}
+
+float Matrix::determinant() const
+{
+    if (width_ == 2 && height_ == 2)
+        return grid_[0][0] * grid_[1][1] - grid_[0][1] * grid_[1][0];
+    float res = 0;
+    for (size_t i = 0; i < width_; i++)
+        res += grid_[0][i] * cofactor(0, i);
+    return res;
+}
+
+Matrix Matrix::submatrix(size_t row, size_t col) const
+{
+    Matrix sub{height_ - 1, width_ - 1};
+    size_t i_sub = 0;
+    for (size_t i = 0; i < height_; i++)
+    {
+        if (i == row)
+            continue;
+        size_t j_sub = 0;
+        for (size_t j = 0; j < width_; j++)
+        {
+            if (j == col)
+                continue;
+            sub[i_sub][j_sub] = grid_[i][j];
+            j_sub++;
+        }
+        i_sub++;
+    }
+    return sub;
+}
+
+float Matrix::minor(size_t row, size_t col) const
+{
+    return submatrix(row, col).determinant();
+}
+
+float Matrix::cofactor(size_t row, size_t col) const
+{
+    if ((row + col) % 2 == 0)
+        return minor(row, col);
+    return -minor(row, col);
+}
+
+bool Matrix::is_invertible() const
+{
+    return determinant() != 0;
+}
+
+Matrix Matrix::inverse() const
+{
+    Matrix cofact{height_, width_};
+    for (size_t i = 0; i < height_; i++)
+        for (size_t j = 0; j < width_; j++)
+            cofact[i][j] = cofactor(i, j);
+    Matrix transposed_cofact = cofact.transpose();
+    auto det = determinant();
+    for (size_t i = 0; i < height_; i++)
+        for (size_t j = 0; j < width_; j++)
+            transposed_cofact[i][j] /= det;
+    return transposed_cofact;
+}
+
 float *Matrix::operator[](size_t i)
 {
     return grid_[i];
