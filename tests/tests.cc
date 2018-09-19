@@ -4,6 +4,7 @@
 #include "tests_color.cc"
 #include "tests_canvas.cc"
 #include "tests_matrix.cc"
+#include "tests_matrix_transformations.cc"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

@@ -1,5 +1,11 @@
 cmake_minimum_required (VERSION 2.6)
 
+set(CMAKE_CXX_COMPILER "g++")
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+#set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+
 project ("The RayTracer Challenge")
 
 include_directories(src src/tuple src/colors src/canvas src/matrix)
