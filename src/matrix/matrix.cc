@@ -203,3 +203,75 @@ Tuple operator*(const Matrix& A, const Tuple& b)
     float w = A[3][0] * b.x_ + A[3][1] * b.y_ + A[3][2] * b.z_ + A[3][3] * b.w_;
     return Tuple(x, y, z, w);
 }
+
+Matrix translation(float x, float y, float z)
+{
+    float grid[][4] = {
+        {1, 0, 0, x},
+        {0, 1, 0, y},
+        {0, 0, 1, z},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
+
+Matrix scaling(float x, float y, float z)
+{
+    float grid[][4] = {
+        {x, 0, 0, 0},
+        {0, y, 0, 0},
+        {0, 0, z, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
+
+Matrix rotation_x(float r)
+{
+    float cos_r = cos(r);
+    float sin_r = sin(r);
+    float grid[][4] = {
+        {1, 0, 0, 0},
+        {0, cos_r, -sin_r, 0},
+        {0, sin_r, cos_r, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
+
+Matrix rotation_y(float r)
+{
+    float cos_r = cos(r);
+    float sin_r = sin(r);
+    float grid[][4] = {
+        {cos_r, 0, sin_r, 0},
+        {0, 1, 0, 0},
+        {-sin_r, 0, cos_r, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
+
+Matrix rotation_z(float r)
+{
+    float cos_r = cos(r);
+    float sin_r = sin(r);
+    float grid[][4] = {
+        {cos_r, -sin_r, 0, 0},
+        {sin_r, cos_r, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
+
+Matrix shearing(float xy, float xz, float yx, float yz, float zx, float zy)
+{
+    float grid[][4] = {
+        {1, xy, xz, 0},
+        {yx, 1, yz, 0},
+        {zx, zy, 1, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid);
+}
