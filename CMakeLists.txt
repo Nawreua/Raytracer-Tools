@@ -10,7 +10,7 @@ project ("The RayTracer Challenge")
 
 include_directories(src src/tuple src/colors src/canvas src/matrix)
 add_subdirectory(src)
-add_subdirectory(src_offside)
+add_subdirectory(offside)
 set(LIBS ${LIBS} tuple)
 set(LIBS ${LIBS} color)
 set(LIBS ${LIBS} canvas)
