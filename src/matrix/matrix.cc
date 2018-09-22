@@ -20,6 +20,30 @@ Matrix::Matrix()
     }
 }
 
+Matrix::Matrix(const Matrix& m)
+    : height_(m.height_), width_(m.width_)
+{
+    grid_ = new float* [m.height_];
+    for (size_t i = 0; i < m.height_; i++)
+    {
+        grid_[i] = new float[m.width_];
+        for (size_t j = 0; j < m.width_; j++)
+            grid_[i][j] = m.grid_[i][j];
+    }
+}
+
+Matrix::Matrix(Matrix& m)
+    : height_(m.height_), width_(m.width_)
+{
+    grid_ = new float* [m.height_];
+    for (size_t i = 0; i < m.height_; i++)
+    {
+        grid_[i] = new float[m.width_];
+        for (size_t j = 0; j < m.width_; j++)
+            grid_[i][j] = m.grid_[i][j];
+    }
+}
+
 Matrix::Matrix(size_t height, size_t width)
     : height_(height), width_(width)
 {
@@ -68,7 +92,7 @@ Matrix::Matrix(float grid[4][4])
     }
 }
 
-const Matrix Matrix::identity_matrix()
+Matrix Matrix::identity_matrix()
 {
     float grid[][4] = {
         {1, 0, 0, 0},

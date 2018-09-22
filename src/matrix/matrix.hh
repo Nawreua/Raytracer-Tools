@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <memory>
 
 #include "constants.hh"
 #include "tuple.hh"
@@ -9,6 +10,8 @@ class Matrix
 {
     public:
         Matrix();
+        Matrix(const Matrix& m);
+        Matrix(Matrix& m);
         Matrix(size_t height, size_t width);
         explicit Matrix(float grid[2][2]);
         explicit Matrix(float grid[3][3]);
@@ -26,7 +29,7 @@ class Matrix
         Matrix inverse() const;
 
         // BEWARE: Only 4*4 identity matrix
-        static const Matrix identity_matrix();
+        static Matrix identity_matrix();
 
         float *operator[](size_t i);
         float *operator[](size_t i) const;

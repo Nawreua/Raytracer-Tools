@@ -8,13 +8,17 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 project ("The RayTracer Challenge")
 
-include_directories(src src/tuple src/colors src/canvas src/matrix)
+include_directories(src src/tuple src/colors src/canvas src/matrix src/ray
+    src/sphere src/intersection)
 add_subdirectory(src)
 add_subdirectory(offside)
 set(LIBS ${LIBS} tuple)
 set(LIBS ${LIBS} color)
 set(LIBS ${LIBS} canvas)
 set(LIBS ${LIBS} matrix)
+set(LIBS ${LIBS} ray)
+set(LIBS ${LIBS} sphere)
+set(LIBS ${LIBS} intersection)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
