@@ -44,6 +44,11 @@ Color& Color::operator*=(const Color& rhs)
     return *this;
 }
 
+Color Color::black()
+{
+    return Color(0, 0, 0);
+}
+
 bool operator==(const Color& lhs, const Color& rhs)
 {
     return equal(lhs.red_, rhs.red_) && equal(lhs.green_, rhs.green_)

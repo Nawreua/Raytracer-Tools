@@ -12,15 +12,20 @@ Tuple::Tuple(float x, float y, float z, float w)
     : x_(x), y_(y), z_(z), w_(w)
 {}
 
-float Tuple::magnitude()
+float Tuple::magnitude() const
 {
     return sqrt(x_ * x_ + y_ * y_ + z_ * z_ + w_ * w_);
 }
 
-Tuple Tuple::normalize()
+Tuple Tuple::normalize() const
 {
     auto magn = magnitude();
     return Tuple(x_ / magn, y_ / magn, z_ / magn, w_ / magn);
+}
+
+Tuple Tuple::reflect(const Tuple& normal) const
+{
+    return *this - normal * 2 * dot(*this, normal);
 }
 
 Tuple& Tuple::operator+=(const Tuple& rhs)

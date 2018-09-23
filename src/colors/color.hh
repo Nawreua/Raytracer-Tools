@@ -14,6 +14,8 @@ struct Color
     Color& operator*=(float rhs);
     Color& operator*=(const Color& rhs);
 
+    static Color black();
+
     float red_;
     float green_;
     float blue_;

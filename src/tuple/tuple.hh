@@ -9,8 +9,10 @@ class Tuple
     public:
         Tuple(float x, float y, float z, float w);
 
-        float magnitude();
-        Tuple normalize();
+        float magnitude() const;
+        Tuple normalize() const;
+
+        Tuple reflect(const Tuple& normal) const;
 
         Tuple& operator+=(const Tuple& rhs);
         Tuple& operator-=(const Tuple& rhs);

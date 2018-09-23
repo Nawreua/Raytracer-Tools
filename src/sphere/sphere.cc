@@ -1,6 +1,7 @@
 #include "sphere.hh"
 
 Sphere::Sphere()
+    : material_(Material())
 {
     float grid[][4] = {
         {1, 0, 0, 0},
@@ -37,6 +38,15 @@ std::vector<Intersection> Sphere::intersect(const Ray& ray)
     res.push_back(Intersection(t1, *this));
     res.push_back(Intersection(t2, *this));
     return res;
+}
+
+Tuple Sphere::normal_at(const Tuple& world_point)
+{
+    auto object_point = transform_->inverse() * world_point;
+    auto object_normal = object_point - point(0, 0, 0);
+    auto world_normal = transform_->inverse().transpose() * object_normal;
+    world_normal.w_ = 0;
+    return world_normal.normalize();
 }
 
 void Sphere::set_transform(const Matrix& t)
