@@ -8,6 +8,8 @@
 #include "tests_ray.cc"
 #include "tests_sphere.cc"
 #include "tests_intersection.cc"
+#include "tests_light.cc"
+#include "tests_material.cc"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

@@ -156,3 +156,19 @@ TEST(TupleTest, CrossProduct)
     ASSERT_EQ(cross(a, b), vector(-1, 2, -1));
     ASSERT_EQ(cross(b, a), vector(1, -2, 1));
 }
+
+TEST(TupleTest, ReflectingVectorAt45)
+{
+    auto v = vector(1, -1, 0);
+    auto n = vector(0, 1, 0);
+    auto r = v.reflect(n);
+    ASSERT_EQ(r, vector(1, 1, 0));
+}
+
+TEST(TupleTest, ReflectingVectorSlanted)
+{
+    auto v = vector(0, -1, 0);
+    auto n = vector(sqrt(2) / 2, sqrt(2) / 2, 0);
+    auto r = v.reflect(n);
+    ASSERT_EQ(r, vector(1, 0, 0));
+}

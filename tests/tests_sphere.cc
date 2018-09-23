@@ -91,3 +91,70 @@ TEST(SphereTest, IntersectingTranslatedSphereWithRay)
     auto xs = s.intersect(r);
     ASSERT_EQ(xs.size(), 0);
 }
+
+TEST(SphereTest, NormalSphereAtPointX)
+{
+    auto s = Sphere();
+    auto n = s.normal_at(point(1, 0, 0));
+    ASSERT_EQ(n, vector(1, 0, 0));
+}
+
+TEST(SphereTest, NormalSphereAtPointY)
+{
+    auto s = Sphere();
+    auto n = s.normal_at(point(0, 1, 0));
+    ASSERT_EQ(n, vector(0, 1, 0));
+}
+
+TEST(SphereTest, NormalSphereAtPointZ)
+{
+    auto s = Sphere();
+    auto n = s.normal_at(point(0, 0, 1));
+    ASSERT_EQ(n, vector(0, 0, 1));
+}
+
+TEST(SphereTest, NormalSphereAtPointNonAxial)
+{
+    auto s = Sphere();
+    auto n = s.normal_at(point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+    ASSERT_EQ(n, vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+}
+
+TEST(SphereTest, NormalIsNormalized)
+{
+    auto s = Sphere();
+    auto n = s.normal_at(point(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+    ASSERT_EQ(n, n.normalize());
+}
+
+TEST(SphereTest, NormalOnTranslatedSphere)
+{
+    auto s = Sphere();
+    s.set_transform(translation(0, 1, 0));
+    auto n = s.normal_at(point(0, 1.70711, -0.70711));
+    ASSERT_EQ(n, vector(0, 0.70711, -0.70711));
+}
+
+TEST(SphereTest, NormalOnScaledSphere)
+{
+    auto s = Sphere();
+    s.set_transform(scaling(1, 0.5, 1));
+    auto n = s.normal_at(point(0, sqrt(2) / 2, -sqrt(2) / 2));
+    ASSERT_EQ(n, vector(0, 0.97014, -0.24254));
+}
+
+TEST(SphereTest, SphereDefaultMaterial)
+{
+    auto s = Sphere();
+    auto m = s.material_;
+    ASSERT_EQ(m, Material());
+}
+
+TEST(SphereTest, SphereAssignedMaterial)
+{
+    auto s = Sphere();
+    auto m = Material();
+    m.ambient_ = 1;
+    s.material_ = m;
+    ASSERT_EQ(s.material_, m);
+}
