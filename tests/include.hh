@@ -11,3 +11,4 @@
 #include "ray.hh"
 #include "sphere.hh"
 #include "tuple.hh"
+#include "world.hh"

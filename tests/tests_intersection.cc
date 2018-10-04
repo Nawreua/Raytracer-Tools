@@ -60,3 +60,35 @@ TEST(IntersectionTest, HitAlwaysLowestNonNegative)
     auto h = hit(xs);
     ASSERT_EQ(h.second, i4);
 }
+
+TEST(IntersectionTest, PrecomputingStateIntersection)
+{
+    auto ray = Ray(point(0, 0, -5), vector(0, 0, 1));
+    auto shape = Sphere();
+    auto hit = Intersection(4, shape);
+    hit.prepare_hit(ray);
+    ASSERT_EQ(hit.point_, point(0, 0, -1));
+    ASSERT_EQ(hit.eyev_, vector(0, 0, -1));
+    ASSERT_EQ(hit.normalv_, vector(0, 0, -1));
+}
+
+TEST(IntersectionTest, IntersectionOccursOutside)
+{
+    auto ray = Ray(point(0, 0, -5), vector(0, 0, 1));
+    auto shape = Sphere();
+    auto hit = Intersection(4, shape);
+    hit.prepare_hit(ray);
+    ASSERT_FALSE(hit.inside_);
+}
+
+TEST(IntersectionTest, IntersectionOccursInside)
+{
+    auto ray = Ray(point(0, 0, 0), vector(0, 0, 1));
+    auto shape = Sphere();
+    auto hit = Intersection(1, shape);
+    hit.prepare_hit(ray);
+    ASSERT_EQ(hit.point_, point(0, 0, 1));
+    ASSERT_EQ(hit.eyev_, vector(0, 0, -1));
+    ASSERT_TRUE(hit.inside_);
+    ASSERT_EQ(hit.normalv_, vector(0, 0, -1));
+}
