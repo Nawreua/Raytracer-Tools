@@ -11,3 +11,5 @@ class PointLight
         Tuple position_;
         Color intensity_;
 };
+
+bool operator==(const PointLight& lhs, const PointLight& rhs);

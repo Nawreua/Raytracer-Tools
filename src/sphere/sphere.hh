@@ -21,3 +21,5 @@ class Sphere
 
         std::shared_ptr<Matrix> transform_;
 };
+
+bool operator==(const Sphere& lhs, const Sphere& rhs);

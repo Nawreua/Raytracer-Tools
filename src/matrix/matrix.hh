@@ -2,6 +2,8 @@
 
 #include <cmath>
 #include <memory>
+#include <ostream>
+#include <vector>
 
 #include "constants.hh"
 #include "tuple.hh"
@@ -17,8 +19,6 @@ class Matrix
         explicit Matrix(float grid[3][3]);
         explicit Matrix(float grid[4][4]);
 
-        ~Matrix();
-
         Matrix transpose() const;
         float determinant() const;
         Matrix submatrix(size_t row, size_t col) const;
@@ -31,14 +31,14 @@ class Matrix
         // BEWARE: Only 4*4 identity matrix
         static Matrix identity_matrix();
 
-        float *operator[](size_t i);
-        float *operator[](size_t i) const;
+        std::vector<float>& operator[](size_t i);
+        const std::vector<float>& operator[](size_t i) const;
 
         size_t height_;
         size_t width_;
 
     private:
-        float **grid_;
+        std::vector<std::vector<float>> grid_;
 };
 
 bool operator==(const Matrix& A, const Matrix& B);
@@ -54,3 +54,5 @@ Matrix rotation_x(float r);
 Matrix rotation_y(float r);
 Matrix rotation_z(float r);
 Matrix shearing(float xy, float xz, float yx, float yz, float zx, float zy);
+
+std::ostream& operator<<(std::ostream& o, const Matrix& m);

@@ -53,3 +53,9 @@ void Sphere::set_transform(const Matrix& t)
 {
     transform_ = std::make_shared<Matrix>(t);
 }
+
+bool operator==(const Sphere& lhs, const Sphere& rhs)
+{
+    return lhs.material_ == rhs.material_
+        && *lhs.transform_ == *rhs.transform_;
+}

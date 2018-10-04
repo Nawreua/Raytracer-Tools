@@ -11,10 +11,10 @@ namespace
 Matrix::Matrix()
     : height_(4), width_(4)
 {
-    grid_ = new float* [4];
+    grid_ = std::vector<std::vector<float>>(4);
     for (size_t i = 0; i < 4; i++)
     {
-        grid_[i] = new float[4];
+        grid_[i].resize(4);
         for (size_t j = 0; j < 4; j++)
             grid_[i][j] = 0;
     }
@@ -23,10 +23,10 @@ Matrix::Matrix()
 Matrix::Matrix(const Matrix& m)
     : height_(m.height_), width_(m.width_)
 {
-    grid_ = new float* [m.height_];
+    grid_ = std::vector<std::vector<float>>(m.height_);
     for (size_t i = 0; i < m.height_; i++)
     {
-        grid_[i] = new float[m.width_];
+        grid_[i].resize(m.width_);
         for (size_t j = 0; j < m.width_; j++)
             grid_[i][j] = m.grid_[i][j];
     }
@@ -35,10 +35,10 @@ Matrix::Matrix(const Matrix& m)
 Matrix::Matrix(Matrix& m)
     : height_(m.height_), width_(m.width_)
 {
-    grid_ = new float* [m.height_];
+    grid_ = std::vector<std::vector<float>>(m.height_);
     for (size_t i = 0; i < m.height_; i++)
     {
-        grid_[i] = new float[m.width_];
+        grid_[i].resize(m.width_);
         for (size_t j = 0; j < m.width_; j++)
             grid_[i][j] = m.grid_[i][j];
     }
@@ -47,10 +47,10 @@ Matrix::Matrix(Matrix& m)
 Matrix::Matrix(size_t height, size_t width)
     : height_(height), width_(width)
 {
-    grid_ = new float* [height];
+    grid_ = std::vector<std::vector<float>>(height);
     for (size_t i = 0; i < height; i++)
     {
-        grid_[i] = new float[width];
+        grid_[i].resize(width);
         for (size_t j = 0; j < width; j++)
             grid_[i][j] = 0;
     }
@@ -59,10 +59,10 @@ Matrix::Matrix(size_t height, size_t width)
 Matrix::Matrix(float grid[2][2])
     : height_(2), width_(2)
 {
-    grid_ = new float* [2];
+    grid_ = std::vector<std::vector<float>>(2);
     for (size_t i = 0; i < 2; i++)
     {
-        grid_[i] = new float[2];
+        grid_[i].resize(2);
         for (size_t j = 0; j < 2; j++)
             grid_[i][j] = grid[i][j];
     }
@@ -71,10 +71,10 @@ Matrix::Matrix(float grid[2][2])
 Matrix::Matrix(float grid[3][3])
     : height_(3), width_(3)
 {
-    grid_ = new float* [3];
+    grid_ = std::vector<std::vector<float>>(3);
     for (size_t i = 0; i < 3; i++)
     {
-        grid_[i] = new float[3];
+        grid_[i].resize(3);
         for (size_t j = 0; j < 3; j++)
             grid_[i][j] = grid[i][j];
     }
@@ -83,10 +83,10 @@ Matrix::Matrix(float grid[3][3])
 Matrix::Matrix(float grid[4][4])
     : height_(4), width_(4)
 {
-    grid_ = new float* [4];
+    grid_ = std::vector<std::vector<float>>(4);
     for (size_t i = 0; i < 4; i++)
     {
-        grid_[i] = new float[4];
+        grid_[i].resize(4);
         for (size_t j = 0; j < 4; j++)
             grid_[i][j] = grid[i][j];
     }
@@ -174,21 +174,14 @@ Matrix Matrix::inverse() const
     return transposed_cofact;
 }
 
-float *Matrix::operator[](size_t i)
+std::vector<float>& Matrix::operator[](size_t i)
 {
     return grid_[i];
 }
 
-float *Matrix::operator[](size_t i) const
+const std::vector<float>& Matrix::operator[](size_t i) const
 {
     return grid_[i];
-}
-
-Matrix::~Matrix()
-{
-    for (size_t i = 0; i < height_; i++)
-        delete[] grid_[i];
-    delete[] grid_;
 }
 
 bool operator==(const Matrix& A, const Matrix& B)
@@ -298,4 +291,18 @@ Matrix shearing(float xy, float xz, float yx, float yz, float zx, float zy)
         {0, 0, 0, 1}
     };
     return Matrix(grid);
+}
+
+std::ostream& operator<<(std::ostream& o, const Matrix& m)
+{
+    o << std::endl;
+    for (size_t i = 0; i < m.height_; i++)
+    {
+        o << "|";
+        for (size_t j = 0; j < m.width_; j++)
+            o << m[i][j] << "|";
+        if (i != m.height_ - 1)
+            o << std::endl;
+    }
+    return o;
 }

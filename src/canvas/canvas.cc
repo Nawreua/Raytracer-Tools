@@ -3,22 +3,13 @@
 Canvas::Canvas(size_t width, size_t height)
     : width_(width), height_(height)
 {
-    grid_ = new Color* [width];
+    grid_ = std::vector<std::vector<Color>>(width);
     for (size_t i = 0; i < width; i++)
     {
-        grid_[i] = new Color[height];
+        grid_[i].resize(height);
         for (size_t j = 0; j < height; j++)
             grid_[i][j] = Color(0, 0, 0);
     }
-}
-
-Canvas::~Canvas()
-{
-    for (size_t i = 0; i < width_; i++)
-    {
-        delete[] grid_[i];
-    }
-    delete[] grid_;
 }
 
 void Canvas::write_pixel(size_t x, size_t y, const Color& color)

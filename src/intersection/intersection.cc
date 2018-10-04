@@ -15,6 +15,23 @@ Intersection::Intersection(float t, Sphere& object)
     : t_(t), object_(&object)
 {}
 
+void Intersection::prepare_hit(const Ray& ray)
+{
+    point_ = ray.position(t_);
+    eyev_ = -ray.direction_;
+    normalv_ = object_->normal_at(point_);
+    inside_ = false;
+    if (dot(normalv_, eyev_) < 0) {
+        inside_ = true;
+        normalv_ = -normalv_;
+    }
+}
+
+bool operator<(const Intersection& lhs, const Intersection& rhs)
+{
+    return lhs.t_ < rhs.t_;
+}
+
 bool operator==(const Intersection& lhs, const Intersection& rhs)
 {
     return equal(lhs.t_, rhs.t_) && lhs.object_ == rhs.object_;

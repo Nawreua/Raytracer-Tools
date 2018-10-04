@@ -8,7 +8,7 @@ class Ray
     public:
         Ray(Tuple origin, Tuple direction);
 
-        Tuple position(float t);
+        Tuple position(float t) const;
 
         Ray transform(const Matrix& m) const;
 

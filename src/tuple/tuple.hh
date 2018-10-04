@@ -7,6 +7,7 @@
 class Tuple
 {
     public:
+        Tuple() = default;
         Tuple(float x, float y, float z, float w);
 
         float magnitude() const;
