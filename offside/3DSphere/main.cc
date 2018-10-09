@@ -1,5 +1,6 @@
 #include <fstream>
 
+#include "camera.hh"
 #include "canvas.hh"
 #include "intersection.hh"
 #include "light.hh"
@@ -11,58 +12,64 @@
 
 int main()
 {
-    auto sphere = Sphere();
-    //sphere.set_transform(scaling(1, 0.5, 1));
-    //sphere.set_transform(scaling(0.5, 1, 1));
-    //sphere.set_transform(rotation_z(PI / 4) * scaling(0.5, 1, 1));
-    //sphere.set_transform(shearing(1, 0, 0, 0, 0, 0) * scaling(0.5, 1, 1));
+    auto world = World();
+    world.lights_.push_back(PointLight(point(-10, 10, -10), Color(1, 1, 1)));
 
-    sphere.material_ = Material();
-    sphere.material_.color_ = Color(0.7, 0.7, 0.7);
-    
-    sphere.material_.ambient_ = 0;
-    //sphere.material_.diffuse_ = 0.4;
-    sphere.material_.specular_ = 0;
+    auto floor = Sphere();
+    floor.set_transform(scaling(10, 0.01, 10));
+    floor.material_ = Material();
+    floor.material_.color_ = Color(1, 0.9, 0.9);
+    floor.material_.specular_ = 0;
 
-    auto light_position = point(-20, 0, -10);
-    auto light_color = Color(1, 1, 1);
+    world.objects_.push_back(floor);
 
-    auto light = PointLight(light_position, light_color);
+    auto left_wall = Sphere();
+    left_wall.set_transform(translation(0, 0, 5) * rotation_y(- PI / 4)                
+            * rotation_x(PI / 2) * scaling(10, 0.1, 10));
+    left_wall.material_ = floor.material_;
 
-    auto ray_origin = point(0, 0, -5);
-    float wall_z = 10;
-    float wall_size = 7.0;
+    world.objects_.push_back(left_wall);
 
-    float canvas_pixels = 100;
-    float pixel_size = wall_size / canvas_pixels;
-    float half = wall_size / 2;
+    auto right_wall = Sphere();
+    right_wall.set_transform(translation(0, 0, 5) * rotation_y(PI / 4)
+                            * rotation_x(PI / 2) * scaling(10, 0.1, 10));
+    right_wall.material_ = floor.material_;
 
-    auto canvas = Canvas(canvas_pixels, canvas_pixels);
+    world.objects_.push_back(right_wall);
 
-    for (auto y = 0; y < canvas_pixels; y++)
-    {
-        float world_y = half - pixel_size * y;
-        for (auto x = 0; x < canvas_pixels; x++)
-        {
-            float world_x = -half + pixel_size * x;
-            auto position = point(world_x, world_y, wall_z);
-            auto ray = Ray(ray_origin, (position - ray_origin).normalize());
+    auto middle = Sphere();
+    middle.set_transform(translation(-0.5, 1, 0.5));
+    middle.material_ = Material();
+    middle.material_.color_ = Color(0.1, 1, 0.5);
+    middle.material_.diffuse_ = 0.7;
+    middle.material_.specular_ = 0.3;
 
-            auto xs = sphere.intersect(ray);
-            auto h = hit(xs);
+    world.objects_.push_back(middle);
 
-            if (h.first)
-            {
-                auto point = ray.position(h.second.t_);
-                auto normal = h.second.object_->normal_at(point);
-                auto eye = -ray.direction_;
-                auto color =
-                    h.second.object_->material_.lighting(light,
-                            point, eye, normal);
-                canvas.write_pixel(x, y, color);
-            }
-        }
-    }
+    auto right = Sphere();
+    right.set_transform(translation(1.5, 0.5, -0.5) * scaling(0.5, 0.5, 0.5));
+    right.material_ = Material();
+    right.material_.color_ = Color(0.5, 1, 0.1);
+    right.material_.diffuse_ = 0.7;
+    right.material_.specular_ = 0.3;
+
+    world.objects_.push_back(right);
+
+    auto left = Sphere();
+    left.set_transform(translation(-1.5, 0.33, -0.75)
+            * scaling(0.33, 0.33, 0.33));
+    left.material_ = Material();
+    left.material_.color_ = Color(1, 0.8, 0.1);
+    left.material_.diffuse_ = 0.7;
+    left.material_.specular_ = 0.3;
+
+    world.objects_.push_back(left);
+
+    auto camera = Camera(1366, 768, PI / 2);
+    camera.transform_ = view_transform(point(0, 1.5, -3), point(0, 1, 0),
+            vector(0, 1, 0));
+
+    auto canvas = camera.render(world);
 
     std::ofstream f("3DSphere.ppm");
     if (f.is_open())
