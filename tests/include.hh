@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "camera.hh"
 #include "canvas.hh"
 #include "color.hh"
 #include "intersection.hh"

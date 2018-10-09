@@ -327,3 +327,45 @@ TEST(MatrixTest, MultiplyByInverse)
     auto C = A * B;
     ASSERT_EQ(C * B.inverse(), A);
 }
+
+TEST(MatrixTest, TransformationMatrixDefaultOrientation)
+{
+    auto from = point(0, 0, 0);
+    auto to = point(0, 0, -1);
+    auto up = vector(0, 1, 0);
+    auto t = view_transform(from, to, up);
+    ASSERT_EQ(t, Matrix::identity_matrix());
+}
+
+TEST(MatrixTest, ViewTransformationMatrixPositiveZDirection)
+{
+    auto from = point(0, 0, 0);
+    auto to = point(0, 0, 1);
+    auto up = vector(0, 1, 0);
+    auto t = view_transform(from, to, up);
+    ASSERT_EQ(t, scaling(-1, 1, -1));
+}
+
+TEST(MatrixTest, ViewTransformationMovesWorld)
+{
+    auto from = point(0, 0, 8);
+    auto to = point(0, 0, 0);
+    auto up = vector(0, 1, 0);
+    auto t = view_transform(from, to, up);
+    ASSERT_EQ(t, translation(0, 0, -8));
+}
+
+TEST(MatrixTest, ArbitaryViewTransformation)
+{
+    auto from = point(1, 3, 2);
+    auto to = point(4, -2, 8);
+    auto up = vector(1, 1, 0);
+    auto t = view_transform(from, to, up);
+    float grid[][4] = {
+        {-0.50709, 0.50709, 0.67612, -2.36643},
+        {0.76772, 0.60609, 0.12122, -2.82843},
+        {-0.35857, 0.59761, -0.71714, 0.0},
+        {0.000, 0.0, 0.0, 1.0}
+    };
+    ASSERT_EQ(t, Matrix(grid));
+}

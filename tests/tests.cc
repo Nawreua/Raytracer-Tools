@@ -11,6 +11,7 @@
 #include "tests_light.cc"
 #include "tests_material.cc"
 #include "tests_world.cc"
+#include "tests_camera.cc"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
