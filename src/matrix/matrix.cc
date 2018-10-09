@@ -293,6 +293,21 @@ Matrix shearing(float xy, float xz, float yx, float yz, float zx, float zy)
     return Matrix(grid);
 }
 
+Matrix view_transform(const Tuple& from, const Tuple& to, const Tuple& up)
+{
+    auto forward = (to - from).normalize();
+    auto upn = up.normalize();
+    auto left = cross(forward, upn);
+    auto true_up = cross(left, forward);
+    float grid[][4] = {
+        {left.x_, left.y_, left.z_, 0},
+        {true_up.x_, true_up.y_, true_up.z_, 0},
+        {-forward.x_, -forward.y_, -forward.z_, 0},
+        {0, 0, 0, 1}
+    };
+    return Matrix(grid) * translation(-from.x_, -from.y_, -from.z_);
+}
+
 std::ostream& operator<<(std::ostream& o, const Matrix& m)
 {
     o << std::endl;

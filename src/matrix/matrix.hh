@@ -54,5 +54,6 @@ Matrix rotation_x(float r);
 Matrix rotation_y(float r);
 Matrix rotation_z(float r);
 Matrix shearing(float xy, float xz, float yx, float yz, float zx, float zy);
+Matrix view_transform(const Tuple& from, const Tuple& to, const Tuple& up);
 
 std::ostream& operator<<(std::ostream& o, const Matrix& m);
