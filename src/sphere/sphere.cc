@@ -9,14 +9,14 @@ Sphere::Sphere()
         {0, 0, 1, 0},
         {0, 0, 0, 1}
     };
-    transform_ = std::make_shared<Matrix>(grid);
+    transform_ = Matrix(grid);
 }
 
 std::vector<Intersection> Sphere::intersect(const Ray& ray)
 {
     std::vector<Intersection> res;
 
-    auto transformed_ray = ray.transform(transform_->inverse());
+    auto transformed_ray = ray.transform(transform_.inverse());
     auto sphere_to_ray = transformed_ray.origin_ - point(0, 0, 0);
     
     float a = dot(transformed_ray.direction_, transformed_ray.direction_);
@@ -42,20 +42,20 @@ std::vector<Intersection> Sphere::intersect(const Ray& ray)
 
 Tuple Sphere::normal_at(const Tuple& world_point)
 {
-    auto object_point = transform_->inverse() * world_point;
+    auto object_point = transform_.inverse() * world_point;
     auto object_normal = object_point - point(0, 0, 0);
-    auto world_normal = transform_->inverse().transpose() * object_normal;
+    auto world_normal = transform_.inverse().transpose() * object_normal;
     world_normal.w_ = 0;
     return world_normal.normalize();
 }
 
 void Sphere::set_transform(const Matrix& t)
 {
-    transform_ = std::make_shared<Matrix>(t);
+    transform_ = t;
 }
 
 bool operator==(const Sphere& lhs, const Sphere& rhs)
 {
     return lhs.material_ == rhs.material_
-        && *lhs.transform_ == *rhs.transform_;
+        && lhs.transform_ == rhs.transform_;
 }

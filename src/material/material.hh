@@ -10,7 +10,7 @@ class Material
         Material();
 
         Color lighting(const PointLight& light, const Tuple& point,
-                const Tuple& eyev, const Tuple& normalv);
+                const Tuple& eyev, const Tuple& normalv, bool in_shadow);
 
         Color color_;
         float ambient_;

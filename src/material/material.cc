@@ -14,12 +14,14 @@ Material::Material()
 {}
 
 Color Material::lighting(const PointLight& light, const Tuple& point,
-                    const Tuple& eyev, const Tuple& normalv)
+                    const Tuple& eyev, const Tuple& normalv, bool in_shadow)
 {
     auto effective_color = color_ * light.intensity_;
     auto lightv = (light.position_ - point).normalize();
 
     auto ambient = effective_color * ambient_;
+    if (in_shadow)
+        return ambient;
     Color diffuse;
     Color specular;
 
@@ -35,12 +37,15 @@ Color Material::lighting(const PointLight& light, const Tuple& point,
         diffuse = effective_color * diffuse_ * light_dot_normal;
 
         auto reflectv = (-lightv).reflect(normalv);
-        float reflect_dot_eye = std::pow(dot(reflectv, eyev), shininess_);
+        float reflect_dot_eye = dot(reflectv, eyev);
 
         if (reflect_dot_eye <= 0)
             specular = Color::black();
         else
-            specular = light.intensity_ * specular_ * reflect_dot_eye;
+        {
+            auto factor = std::pow(reflect_dot_eye, shininess_);
+            specular = light.intensity_ * specular_ * factor;
+        }
     }
     return ambient + diffuse + specular;
 }

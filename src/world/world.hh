@@ -14,6 +14,7 @@ class World
         std::vector<Intersection> intersect_world(const Ray& ray);
         Color shade_hit(const Intersection& hit);
         Color color_at(const Ray& ray);
+        bool is_shadowed(const Tuple& point, const PointLight& light);
 
         static World default_world();
 

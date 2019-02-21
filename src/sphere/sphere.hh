@@ -19,7 +19,7 @@ class Sphere
 
         Material material_;
 
-        std::shared_ptr<Matrix> transform_;
+        Matrix transform_;
 };
 
 bool operator==(const Sphere& lhs, const Sphere& rhs);

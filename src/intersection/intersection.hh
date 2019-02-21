@@ -21,6 +21,7 @@ class Intersection
         Sphere *object_;
 
         Tuple point_;
+        Tuple over_point_;
         Tuple eyev_;
         Tuple normalv_;
         bool inside_;

@@ -25,6 +25,7 @@ void Intersection::prepare_hit(const Ray& ray)
         inside_ = true;
         normalv_ = -normalv_;
     }
+    over_point_ = point_ + normalv_ * EPSILON;
 }
 
 bool operator<(const Intersection& lhs, const Intersection& rhs)
