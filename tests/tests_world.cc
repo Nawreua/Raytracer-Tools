@@ -84,3 +84,47 @@ TEST(WorldTest, ColorIntersectionBehindRay)
     auto c = world.color_at(ray);
     ASSERT_EQ(c, inner.material_.color_);
 }
+
+TEST(WorldTest, NoShadowWhenNothingCollinearWithPointAndLight)
+{
+    auto world = World::default_world();
+    auto p = point(0, 10, 0);
+    ASSERT_FALSE(world.is_shadowed(p, world.lights_[0]));
+}
+
+TEST(WorldTest, ShadowWhenObjectBetweenPointAndLight)
+{
+    auto world = World::default_world();
+    auto p = point(10, -10, 10);
+    ASSERT_TRUE(world.is_shadowed(p, world.lights_[0]));
+}
+
+TEST(WorldTest, NoShadowWhenObjectBehindLight)
+{
+    auto world = World::default_world();
+    auto p = point(-20, 20, -20);
+    ASSERT_FALSE(world.is_shadowed(p, world.lights_[0]));
+}
+
+TEST(WorldTest, NoShadowWhenObjectBehindPoint)
+{
+    auto world = World::default_world();
+    auto p = point(-2, 2, -2);
+    ASSERT_FALSE(world.is_shadowed(p, world.lights_[0]));
+}
+
+TEST(WorldTest, ShadeHitGivenIntersectionShadow)
+{
+    auto w = World();
+    w.lights_.push_back(PointLight(point(0, 0, -10), Color(1, 1, 1)));
+    auto s1 = Sphere();
+    w.objects_.push_back(s1);
+    auto s2 = Sphere();
+    s2.transform_ = translation(0, 0, 10);
+    w.objects_.push_back(s2);
+    auto r = Ray(point(0, 0, 5), vector(0, 0, 1));
+    auto i = Intersection(4, s2);
+    i.prepare_hit(r);
+    auto c = w.shade_hit(i);
+    ASSERT_EQ(c, Color(0.1, 0.1, 0.1));
+}

@@ -92,3 +92,14 @@ TEST(IntersectionTest, IntersectionOccursInside)
     ASSERT_TRUE(hit.inside_);
     ASSERT_EQ(hit.normalv_, vector(0, 0, -1));
 }
+
+TEST(IntersectionTest, HitShouldOffsetPoint)
+{
+    auto r = Ray(point(0, 0, -5), vector(0, 0, 1));
+    auto shape = Sphere();
+    shape.transform_ = translation(0, 0, 1);
+    auto i = Intersection(5, shape);
+    i.prepare_hit(r);
+    ASSERT_LT(i.over_point_.z_, -EPSILON/2);
+    ASSERT_GT(i.point_.z_, i.over_point_.z_);
+}

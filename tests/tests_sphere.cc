@@ -61,7 +61,7 @@ TEST(SphereTest, IntersectSetObjectOnIntersection)
 TEST(SphereTest, DefaultSphereTransformation)
 {
     auto s = Sphere();
-    ASSERT_EQ(*s.transform_, Matrix::identity_matrix());
+    ASSERT_EQ(s.transform_, Matrix::identity_matrix());
 }
 
 TEST(SphereTest, ChangingSphereTransformation)
@@ -69,7 +69,7 @@ TEST(SphereTest, ChangingSphereTransformation)
     auto s = Sphere();
     auto t = translation(2, 3, 4);
     s.set_transform(t);
-    ASSERT_EQ(*s.transform_, t);
+    ASSERT_EQ(s.transform_, t);
 }
 
 TEST(SphereTest, IntersectingScaledSphereWithRay)
