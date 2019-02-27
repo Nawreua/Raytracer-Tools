@@ -18,8 +18,8 @@ TEST(WorldTest, DefaultWorld)
     s2.set_transform(scaling(0.5, 0.5, 0.5));
     auto world = World::default_world();
     ASSERT_EQ(world.lights_[0], light);
-    ASSERT_EQ(world.objects_[0], s1);
-    ASSERT_EQ(world.objects_[1], s2);
+    ASSERT_EQ(*world.objects_[0], s1);
+    ASSERT_EQ(*world.objects_[1], s2);
 }
 
 TEST(WorldTest, IntersectWorldWithRay)
@@ -39,7 +39,7 @@ TEST(WorldTest, ShadingIntersection)
     auto world = World::default_world();
     auto ray = Ray(point(0, 0, -5), vector(0, 0, 1));
     auto shape = world.objects_[0];
-    auto hit = Intersection(4, shape);
+    auto hit = Intersection(4, *shape);
     hit.prepare_hit(ray);
     auto c = world.shade_hit(hit);
     ASSERT_EQ(c, Color(0.38066, 0.47583, 0.2855));
@@ -51,7 +51,7 @@ TEST(WorldTest, ShadingIntersectionInside)
     world.lights_[0] = PointLight(point(0, 0.25, 0), Color(1, 1, 1));
     auto ray = Ray(point(0, 0, 0), vector(0, 0, 1));
     auto shape = world.objects_[1];
-    auto hit = Intersection(0.5, shape);
+    auto hit = Intersection(0.5, *shape);
     hit.prepare_hit(ray);
     auto c = world.shade_hit(hit);
     ASSERT_EQ(c, Color(0.90498, 0.90498, 0.90498));
@@ -77,12 +77,12 @@ TEST(WorldTest, ColorIntersectionBehindRay)
 {
     auto world = World::default_world();
     auto outer = world.objects_[0];
-    outer.material_.ambient_ = 1;
+    outer->material_.ambient_ = 1;
     auto inner = world.objects_[1];
-    inner.material_.ambient_ = 1;
+    inner->material_.ambient_ = 1;
     auto ray = Ray(point(0, 0, -0.75), vector(0, 0, 1));
     auto c = world.color_at(ray);
-    ASSERT_EQ(c, inner.material_.color_);
+    ASSERT_EQ(c, inner->material_.color_);
 }
 
 TEST(WorldTest, NoShadowWhenNothingCollinearWithPointAndLight)
@@ -117,13 +117,13 @@ TEST(WorldTest, ShadeHitGivenIntersectionShadow)
 {
     auto w = World();
     w.lights_.push_back(PointLight(point(0, 0, -10), Color(1, 1, 1)));
-    auto s1 = Sphere();
+    auto s1 = std::make_shared<Sphere>();
     w.objects_.push_back(s1);
-    auto s2 = Sphere();
-    s2.transform_ = translation(0, 0, 10);
+    auto s2 = std::make_shared<Sphere>();
+    s2->transform_ = translation(0, 0, 10);
     w.objects_.push_back(s2);
     auto r = Ray(point(0, 0, 5), vector(0, 0, 1));
-    auto i = Intersection(4, s2);
+    auto i = Intersection(4, *s2);
     i.prepare_hit(r);
     auto c = w.shade_hit(i);
     ASSERT_EQ(c, Color(0.1, 0.1, 0.1));

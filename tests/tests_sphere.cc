@@ -1,5 +1,11 @@
 #include "include.hh"
 
+TEST(SphereTest, SphereIsShape)
+{
+    auto s = Sphere();
+    ASSERT_NE(dynamic_cast<Shape*>(&s), nullptr);
+}
+
 TEST(SphereTest, RayIntersectSphere)
 {
     auto r = Ray(point(0, 0, -5), vector(0, 0, 1));
@@ -56,20 +62,6 @@ TEST(SphereTest, IntersectSetObjectOnIntersection)
     ASSERT_EQ(xs.size(), 2);
     ASSERT_EQ(xs[0].object_, &s);
     ASSERT_EQ(xs[1].object_, &s);
-}
-
-TEST(SphereTest, DefaultSphereTransformation)
-{
-    auto s = Sphere();
-    ASSERT_EQ(s.transform_, Matrix::identity_matrix());
-}
-
-TEST(SphereTest, ChangingSphereTransformation)
-{
-    auto s = Sphere();
-    auto t = translation(2, 3, 4);
-    s.set_transform(t);
-    ASSERT_EQ(s.transform_, t);
 }
 
 TEST(SphereTest, IntersectingScaledSphereWithRay)
@@ -141,20 +133,4 @@ TEST(SphereTest, NormalOnScaledSphere)
     s.set_transform(scaling(1, 0.5, 1));
     auto n = s.normal_at(point(0, sqrt(2) / 2, -sqrt(2) / 2));
     ASSERT_EQ(n, vector(0, 0.97014, -0.24254));
-}
-
-TEST(SphereTest, SphereDefaultMaterial)
-{
-    auto s = Sphere();
-    auto m = s.material_;
-    ASSERT_EQ(m, Material());
-}
-
-TEST(SphereTest, SphereAssignedMaterial)
-{
-    auto s = Sphere();
-    auto m = Material();
-    m.ambient_ = 1;
-    s.material_ = m;
-    ASSERT_EQ(s.material_, m);
 }
