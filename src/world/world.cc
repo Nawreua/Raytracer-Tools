@@ -1,11 +1,13 @@
 #include "world.hh"
 
+#include "sphere.hh"
+
 std::vector<Intersection> World::intersect_world(const Ray& ray)
 {
     std::vector<Intersection> res;
-    for (auto& object: objects_)
+    for (auto object: objects_)
     {
-        auto xs = object.intersect(ray);
+        auto xs = object->intersect(ray);
         for (auto x: xs)
             res.push_back(x);
     }
@@ -52,12 +54,12 @@ World World::default_world()
 {
     World world;
     world.lights_.push_back(PointLight(point(-10, 10, -10), Color(1, 1, 1)));
-    Sphere s1;
-    Sphere s2;
-    s1.material_.color_ = Color(0.8, 1.0, 0.6);
-    s1.material_.diffuse_ = 0.7;
-    s1.material_.specular_ = 0.2;
-    s2.set_transform(scaling(0.5, 0.5, 0.5));
+    auto s1 = std::make_shared<Sphere>();
+    auto s2 = std::make_shared<Sphere>();
+    s1->material_.color_ = Color(0.8, 1.0, 0.6);
+    s1->material_.diffuse_ = 0.7;
+    s1->material_.specular_ = 0.2;
+    s2->set_transform(scaling(0.5, 0.5, 0.5));
     world.objects_.push_back(s1);
     world.objects_.push_back(s2);
     return world;

@@ -1,15 +1,17 @@
 #pragma once
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 
 #include "intersection.hh"
 #include "light.hh"
-#include "sphere.hh"
+#include "shape.hh"
 
 class World
 {
     public:
+        using shared_shape = std::shared_ptr<Shape>;
 
         std::vector<Intersection> intersect_world(const Ray& ray);
         Color shade_hit(const Intersection& hit);
@@ -18,6 +20,6 @@ class World
 
         static World default_world();
 
-        std::vector<Sphere> objects_;
+        std::vector<shared_shape> objects_;
         std::vector<PointLight> lights_;
 };

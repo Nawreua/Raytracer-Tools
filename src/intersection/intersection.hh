@@ -7,18 +7,18 @@
 #include "ray.hh"
 #include "tuple.hh"
 
-class Sphere;
+class Shape;
 
 class Intersection
 {
     public:
         Intersection() = default;
-        Intersection(float t, Sphere& object);
+        Intersection(float t, Shape& object);
 
         void prepare_hit(const Ray& ray);
 
         float t_;
-        Sphere *object_;
+        Shape *object_;
 
         Tuple point_;
         Tuple over_point_;

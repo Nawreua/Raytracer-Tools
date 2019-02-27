@@ -6,6 +6,7 @@
 class Ray
 {
     public:
+        Ray() = default;
         Ray(Tuple origin, Tuple direction);
 
         Tuple position(float t) const;

@@ -2,13 +2,11 @@
 
 #include "shape.hh"
 
-class Sphere: public Shape
+class Plane: public Shape
 {
     public:
-        Sphere() = default;
+        Plane() = default;
 
         std::vector<Intersection> local_intersect(const Ray& ray) override;
         Tuple local_normal_at(const Tuple& p) override;
 };
-
-//bool operator==(const Sphere& lhs, const Sphere& rhs);

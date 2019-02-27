@@ -11,7 +11,7 @@ namespace
     }
 }
 
-Intersection::Intersection(float t, Sphere& object)
+Intersection::Intersection(float t, Shape& object)
     : t_(t), object_(&object)
 {}
 
