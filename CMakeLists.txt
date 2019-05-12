@@ -1,36 +1,42 @@
-cmake_minimum_required (VERSION 2.6)
+# SETUP
+cmake_minimum_required(VERSION 3.12)
+project("The RayTracer Challenge")
 
+# BUILD OPTIONS
 set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-#set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+if(NOT CMAKE_BUILD_TYPE)
+  message(STATUS "Not build type selected, default to Release")
+  set(CMAKE_BUILD_TYPE "Release")
+endif()
 
-project ("The RayTracer Challenge")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -pedantic")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast -flto -march=native")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -fsanitize=address --coverage")
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# INCLUDE
 include_directories(src src/tuple src/colors src/canvas src/matrix src/ray
     src/sphere src/intersection src/light src/material src/world
     src/camera src/shape src/plane src/pattern)
+
+# LIBRARIES
+set(LIBS ${LIBS} CACHE INTERNAL "")
+
 add_subdirectory(src)
 add_subdirectory(offside)
-set(LIBS ${LIBS} tuple)
-set(LIBS ${LIBS} color)
-set(LIBS ${LIBS} canvas)
-set(LIBS ${LIBS} matrix)
-set(LIBS ${LIBS} ray)
-set(LIBS ${LIBS} shape)
-set(LIBS ${LIBS} sphere)
-set(LIBS ${LIBS} intersection)
-set(LIBS ${LIBS} light)
-set(LIBS ${LIBS} material)
-set(LIBS ${LIBS} world)
-set(LIBS ${LIBS} camera)
-set(LIBS ${LIBS} plane)
-set(LIBS ${LIBS} pattern)
 
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-
-add_executable(check EXCLUDE_FROM_ALL tests/tests.cc)
-target_link_libraries(check ${LIBS} ${GTEST_LIBRARIES} pthread)
+# TESTS
+find_package(GTest)
+if(GTest_FOUND)
+  add_executable(check EXCLUDE_FROM_ALL)
+  target_sources(check PRIVATE "tests/tests.cc")
+  target_link_libraries(check PRIVATE ${LIBS} GTest::GTest)
+  set_target_properties(check
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  gtest_discover_tests(check)
+endif()
