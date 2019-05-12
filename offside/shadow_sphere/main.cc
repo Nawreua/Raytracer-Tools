@@ -10,9 +10,9 @@
 int main()
 {
     auto sphere = Sphere();
-    //sphere.set_transform(scaling(1, 0.5, 1));
-    //sphere.set_transform(scaling(0.5, 1, 1));
-    //sphere.set_transform(rotation_z(PI / 4) * scaling(0.5, 1, 1));
+    // sphere.set_transform(scaling(1, 0.5, 1));
+    // sphere.set_transform(scaling(0.5, 1, 1));
+    // sphere.set_transform(rotation_z(PI / 4) * scaling(0.5, 1, 1));
     sphere.set_transform(shearing(1, 0, 0, 0, 0, 0) * scaling(0.5, 1, 1));
 
     auto ray_origin = point(0, 0, -5);

@@ -11,21 +11,20 @@ class Shape;
 
 class Intersection
 {
-    public:
-        Intersection() = default;
-        Intersection(float t, Shape& object);
+public:
+    Intersection() = default;
+    Intersection(float t, Shape& object);
 
-        void prepare_hit(const Ray& ray);
+    void prepare_hit(const Ray& ray);
 
-        float t_;
-        Shape *object_;
+    float t_;
+    Shape* object_;
 
-        Tuple point_;
-        Tuple over_point_;
-        Tuple eyev_;
-        Tuple normalv_;
-        bool inside_;
-
+    Tuple point_;
+    Tuple over_point_;
+    Tuple eyev_;
+    Tuple normalv_;
+    bool inside_;
 };
 
 bool operator<(const Intersection& lhs, const Intersection& rhs);

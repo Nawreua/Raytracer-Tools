@@ -33,7 +33,24 @@ add_subdirectory(offside)
 find_package(GTest)
 if(GTest_FOUND)
   add_executable(check EXCLUDE_FROM_ALL)
-  target_sources(check PRIVATE "tests/tests.cc")
+  target_sources(check PRIVATE
+    "tests/tests_camera.cc"
+    "tests/tests_canvas.cc"
+    "tests/tests.cc"
+    "tests/tests_color.cc"
+    "tests/tests_intersection.cc"
+    "tests/tests_light.cc"
+    "tests/tests_material.cc"
+    "tests/tests_matrix.cc"
+    "tests/tests_matrix_transformations.cc"
+    "tests/tests_pattern.cc"
+    "tests/tests_plane.cc"
+    "tests/tests_ray.cc"
+    "tests/tests_shape.cc"
+    "tests/tests_sphere.cc"
+    "tests/tests_tuple.cc"
+    "tests/tests_world.cc"
+    "tests/tests.cc")
   target_link_libraries(check PRIVATE ${LIBS} GTest::GTest)
   set_target_properties(check
     PROPERTIES

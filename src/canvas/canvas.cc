@@ -1,7 +1,8 @@
 #include "canvas.hh"
 
 Canvas::Canvas(size_t width, size_t height)
-    : width_(width), height_(height)
+    : width_(width)
+    , height_(height)
 {
     grid_ = std::vector<std::vector<Color>>(width);
     for (size_t i = 0; i < width; i++)
@@ -32,12 +33,12 @@ namespace
             return 0;
         return color;
     }
-}
+} // namespace
 
 std::string Canvas::canvas_to_ppm()
 {
-    std::string ppm = "P3\n" + std::to_string(width_)
-        + " " + std::to_string(height_) + "\n255\n";
+    std::string ppm = "P3\n" + std::to_string(width_) + " "
+        + std::to_string(height_) + "\n255\n";
     for (size_t j = 0; j < height_; j++)
     {
         auto length = 0;

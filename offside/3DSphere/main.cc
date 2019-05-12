@@ -25,15 +25,15 @@ int main()
     world.objects_.push_back(floor);
 
     auto left_wall = std::make_shared<Sphere>();
-    left_wall->set_transform(translation(0, 0, 5) * rotation_y(- PI / 4)                
-            * rotation_x(PI / 2) * scaling(10, 0.1, 10));
+    left_wall->set_transform(translation(0, 0, 5) * rotation_y(-PI / 4)
+                             * rotation_x(PI / 2) * scaling(10, 0.1, 10));
     left_wall->material_ = floor->material_;
 
     world.objects_.push_back(left_wall);
 
     auto right_wall = std::make_shared<Sphere>();
     right_wall->set_transform(translation(0, 0, 5) * rotation_y(PI / 4)
-                            * rotation_x(PI / 2) * scaling(10, 0.1, 10));
+                              * rotation_x(PI / 2) * scaling(10, 0.1, 10));
     right_wall->material_ = floor->material_;
 
     world.objects_.push_back(right_wall);
@@ -58,7 +58,7 @@ int main()
 
     auto left = std::make_shared<Sphere>();
     left->set_transform(translation(-1.5, 0.33, -0.75)
-            * scaling(0.33, 0.33, 0.33));
+                        * scaling(0.33, 0.33, 0.33));
     left->material_ = Material();
     left->material_.color_ = Color(1, 0.8, 0.1);
     left->material_.diffuse_ = 0.7;
@@ -67,8 +67,8 @@ int main()
     world.objects_.push_back(left);
 
     auto camera = Camera(1366, 768, PI / 2);
-    camera.transform_ = view_transform(point(0, 1.5, -3), point(0, 1, 0),
-            vector(0, 1, 0));
+    camera.transform_ =
+        view_transform(point(0, 1.5, -3), point(0, 1, 0), vector(0, 1, 0));
 
     auto canvas = camera.render(world);
 

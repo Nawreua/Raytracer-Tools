@@ -6,10 +6,13 @@ namespace
     {
         return abs(a - b) < EPSILON;
     }
-}
+} // namespace
 
 Tuple::Tuple(float x, float y, float z, float w)
-    : x_(x), y_(y), z_(z), w_(w)
+    : x_(x)
+    , y_(y)
+    , z_(z)
+    , w_(w)
 {}
 
 float Tuple::magnitude() const
@@ -71,9 +74,8 @@ float dot(const Tuple& a, const Tuple& b)
 
 Tuple cross(const Tuple& a, const Tuple& b)
 {
-    return vector(a.y_ * b.z_ - a.z_ * b.y_,
-            a.z_ * b.x_ - a.x_ * b.z_,
-            a.x_ * b.y_ - a.y_ * b.x_);
+    return vector(a.y_ * b.z_ - a.z_ * b.y_, a.z_ * b.x_ - a.x_ * b.z_,
+                  a.x_ * b.y_ - a.y_ * b.x_);
 }
 
 bool is_a_point(const Tuple& t)

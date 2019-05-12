@@ -1,16 +1,16 @@
 #include "include.hh"
 
-class PatternTest: public ::testing::Test
+class PatternTest : public ::testing::Test
 {
-    protected:
-        void SetUp() override
-        {
-            black = Color(0, 0, 1);
-            white = Color(1, 1, 1);
-        }
+protected:
+    void SetUp() override
+    {
+        black = Color(0, 0, 1);
+        white = Color(1, 1, 1);
+    }
 
-        Color black;
-        Color white;
+    Color black;
+    Color white;
 };
 
 TEST_F(PatternTest, CreatingStripePattern)

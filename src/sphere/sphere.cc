@@ -5,7 +5,7 @@ std::vector<Intersection> Sphere::local_intersect(const Ray& ray)
     std::vector<Intersection> res;
 
     auto sphere_to_ray = ray.origin_ - point(0, 0, 0);
-    
+
     float a = dot(ray.direction_, ray.direction_);
     float b = 2.0 * dot(ray.direction_, sphere_to_ray);
     float c = dot(sphere_to_ray, sphere_to_ray) - 1.0;

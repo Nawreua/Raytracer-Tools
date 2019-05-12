@@ -6,24 +6,24 @@
 
 class Tuple
 {
-    public:
-        Tuple() = default;
-        Tuple(float x, float y, float z, float w);
+public:
+    Tuple() = default;
+    Tuple(float x, float y, float z, float w);
 
-        float magnitude() const;
-        Tuple normalize() const;
+    float magnitude() const;
+    Tuple normalize() const;
 
-        Tuple reflect(const Tuple& normal) const;
+    Tuple reflect(const Tuple& normal) const;
 
-        Tuple& operator+=(const Tuple& rhs);
-        Tuple& operator-=(const Tuple& rhs);
-        Tuple& operator*=(float rhs);
-        Tuple& operator/=(float rhs);
+    Tuple& operator+=(const Tuple& rhs);
+    Tuple& operator-=(const Tuple& rhs);
+    Tuple& operator*=(float rhs);
+    Tuple& operator/=(float rhs);
 
-        float x_;
-        float y_;
-        float z_;
-        float w_;
+    float x_;
+    float y_;
+    float z_;
+    float w_;
 };
 
 bool is_a_point(const Tuple& t);

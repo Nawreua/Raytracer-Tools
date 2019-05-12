@@ -37,8 +37,8 @@ TEST(CanvasTest, PPMPixelData)
     c.write_pixel(4, 2, c3);
     auto ppm = c.canvas_to_ppm();
     auto pixel_data = "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n"
-        "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n"
-        "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n";
+                      "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n"
+                      "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n";
     ASSERT_NE(ppm.find(pixel_data), std::string::npos);
 }
 

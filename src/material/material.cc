@@ -6,16 +6,20 @@ namespace
     {
         return abs(a - b) < EPSILON;
     }
-}
+} // namespace
 
 Material::Material()
-    : color_(Color(1, 1, 1)), ambient_(0.1), diffuse_(0.9), specular_(0.9),
-    shininess_(200), pattern_(nullptr)
+    : color_(Color(1, 1, 1))
+    , ambient_(0.1)
+    , diffuse_(0.9)
+    , specular_(0.9)
+    , shininess_(200)
+    , pattern_(nullptr)
 {}
 
 Color Material::lighting(const Shape& object, const PointLight& light,
-        const Tuple& point, const Tuple& eyev, const Tuple& normalv,
-        bool in_shadow)
+                         const Tuple& point, const Tuple& eyev,
+                         const Tuple& normalv, bool in_shadow)
 {
     auto& color = color_;
     if (pattern_)

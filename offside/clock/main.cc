@@ -17,7 +17,7 @@ int main()
     {
         hour = r * hour;
         canvas.write_pixel(hour.z_ * radius + origin.z_,
-                hour.x_ * radius + origin.x_, white);
+                           hour.x_ * radius + origin.x_, white);
     }
     std::ofstream f("clock.ppm");
     if (f.is_open())

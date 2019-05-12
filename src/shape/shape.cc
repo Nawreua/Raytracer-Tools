@@ -2,8 +2,8 @@
 
 Shape::Shape()
     : material_(Material())
-      ,transform_(Matrix::identity_matrix())
-{ }
+    , transform_(Matrix::identity_matrix())
+{}
 
 std::vector<Intersection> Shape::intersect(const Ray& ray)
 {
@@ -27,8 +27,7 @@ void Shape::set_transform(const Matrix& t)
 
 bool operator==(const Shape& lhs, const Shape& rhs)
 {
-    return lhs.material_ == rhs.material_
-        && lhs.transform_ == rhs.transform_;
+    return lhs.material_ == rhs.material_ && lhs.transform_ == rhs.transform_;
 }
 
 std::vector<Intersection> TestShape::local_intersect(const Ray& ray)

@@ -2,11 +2,11 @@
 
 #include "shape.hh"
 
-class Plane: public Shape
+class Plane : public Shape
 {
-    public:
-        Plane() = default;
+public:
+    Plane() = default;
 
-        std::vector<Intersection> local_intersect(const Ray& ray) override;
-        Tuple local_normal_at(const Tuple& p) override;
+    std::vector<Intersection> local_intersect(const Ray& ray) override;
+    Tuple local_normal_at(const Tuple& p) override;
 };

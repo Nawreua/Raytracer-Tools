@@ -6,10 +6,11 @@ namespace
     {
         return abs(a - b) < EPSILON;
     }
-}
+} // namespace
 
 Matrix::Matrix()
-    : height_(4), width_(4)
+    : height_(4)
+    , width_(4)
 {
     grid_ = std::vector<std::vector<float>>(4);
     for (size_t i = 0; i < 4; i++)
@@ -21,7 +22,8 @@ Matrix::Matrix()
 }
 
 Matrix::Matrix(const Matrix& m)
-    : height_(m.height_), width_(m.width_)
+    : height_(m.height_)
+    , width_(m.width_)
 {
     grid_ = std::vector<std::vector<float>>(m.height_);
     for (size_t i = 0; i < m.height_; i++)
@@ -33,7 +35,8 @@ Matrix::Matrix(const Matrix& m)
 }
 
 Matrix::Matrix(Matrix& m)
-    : height_(m.height_), width_(m.width_)
+    : height_(m.height_)
+    , width_(m.width_)
 {
     grid_ = std::vector<std::vector<float>>(m.height_);
     for (size_t i = 0; i < m.height_; i++)
@@ -45,7 +48,8 @@ Matrix::Matrix(Matrix& m)
 }
 
 Matrix::Matrix(size_t height, size_t width)
-    : height_(height), width_(width)
+    : height_(height)
+    , width_(width)
 {
     grid_ = std::vector<std::vector<float>>(height);
     for (size_t i = 0; i < height; i++)
@@ -57,7 +61,8 @@ Matrix::Matrix(size_t height, size_t width)
 }
 
 Matrix::Matrix(float grid[2][2])
-    : height_(2), width_(2)
+    : height_(2)
+    , width_(2)
 {
     grid_ = std::vector<std::vector<float>>(2);
     for (size_t i = 0; i < 2; i++)
@@ -69,7 +74,8 @@ Matrix::Matrix(float grid[2][2])
 }
 
 Matrix::Matrix(float grid[3][3])
-    : height_(3), width_(3)
+    : height_(3)
+    , width_(3)
 {
     grid_ = std::vector<std::vector<float>>(3);
     for (size_t i = 0; i < 3; i++)
@@ -81,7 +87,8 @@ Matrix::Matrix(float grid[3][3])
 }
 
 Matrix::Matrix(float grid[4][4])
-    : height_(4), width_(4)
+    : height_(4)
+    , width_(4)
 {
     grid_ = std::vector<std::vector<float>>(4);
     for (size_t i = 0; i < 4; i++)
@@ -94,12 +101,7 @@ Matrix::Matrix(float grid[4][4])
 
 Matrix Matrix::identity_matrix()
 {
-    float grid[][4] = {
-        {1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
@@ -197,16 +199,14 @@ bool operator==(const Matrix& A, const Matrix& B)
 
 Matrix operator*(const Matrix& A, const Matrix& B)
 {
-    //Maybe add assert
+    // Maybe add assert
     Matrix M;
     for (size_t row = 0; row < 4; row++)
     {
         for (size_t col = 0; col < 4; col++)
         {
-            M[row][col] = A[row][0] * B[0][col] +
-                          A[row][1] * B[1][col] +
-                          A[row][2] * B[2][col] +
-                          A[row][3] * B[3][col];
+            M[row][col] = A[row][0] * B[0][col] + A[row][1] * B[1][col]
+                + A[row][2] * B[2][col] + A[row][3] * B[3][col];
         }
     }
     return M;
@@ -223,23 +223,13 @@ Tuple operator*(const Matrix& A, const Tuple& b)
 
 Matrix translation(float x, float y, float z)
 {
-    float grid[][4] = {
-        {1, 0, 0, x},
-        {0, 1, 0, y},
-        {0, 0, 1, z},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{1, 0, 0, x}, {0, 1, 0, y}, {0, 0, 1, z}, {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
 Matrix scaling(float x, float y, float z)
 {
-    float grid[][4] = {
-        {x, 0, 0, 0},
-        {0, y, 0, 0},
-        {0, 0, z, 0},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{x, 0, 0, 0}, {0, y, 0, 0}, {0, 0, z, 0}, {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
@@ -247,12 +237,10 @@ Matrix rotation_x(float r)
 {
     float cos_r = cos(r);
     float sin_r = sin(r);
-    float grid[][4] = {
-        {1, 0, 0, 0},
-        {0, cos_r, -sin_r, 0},
-        {0, sin_r, cos_r, 0},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{1, 0, 0, 0},
+                       {0, cos_r, -sin_r, 0},
+                       {0, sin_r, cos_r, 0},
+                       {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
@@ -260,12 +248,10 @@ Matrix rotation_y(float r)
 {
     float cos_r = cos(r);
     float sin_r = sin(r);
-    float grid[][4] = {
-        {cos_r, 0, sin_r, 0},
-        {0, 1, 0, 0},
-        {-sin_r, 0, cos_r, 0},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{cos_r, 0, sin_r, 0},
+                       {0, 1, 0, 0},
+                       {-sin_r, 0, cos_r, 0},
+                       {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
@@ -273,23 +259,17 @@ Matrix rotation_z(float r)
 {
     float cos_r = cos(r);
     float sin_r = sin(r);
-    float grid[][4] = {
-        {cos_r, -sin_r, 0, 0},
-        {sin_r, cos_r, 0, 0},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{cos_r, -sin_r, 0, 0},
+                       {sin_r, cos_r, 0, 0},
+                       {0, 0, 1, 0},
+                       {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
 Matrix shearing(float xy, float xz, float yx, float yz, float zx, float zy)
 {
     float grid[][4] = {
-        {1, xy, xz, 0},
-        {yx, 1, yz, 0},
-        {zx, zy, 1, 0},
-        {0, 0, 0, 1}
-    };
+        {1, xy, xz, 0}, {yx, 1, yz, 0}, {zx, zy, 1, 0}, {0, 0, 0, 1}};
     return Matrix(grid);
 }
 
@@ -299,12 +279,10 @@ Matrix view_transform(const Tuple& from, const Tuple& to, const Tuple& up)
     auto upn = up.normalize();
     auto left = cross(forward, upn);
     auto true_up = cross(left, forward);
-    float grid[][4] = {
-        {left.x_, left.y_, left.z_, 0},
-        {true_up.x_, true_up.y_, true_up.z_, 0},
-        {-forward.x_, -forward.y_, -forward.z_, 0},
-        {0, 0, 0, 1}
-    };
+    float grid[][4] = {{left.x_, left.y_, left.z_, 0},
+                       {true_up.x_, true_up.y_, true_up.z_, 0},
+                       {-forward.x_, -forward.y_, -forward.z_, 0},
+                       {0, 0, 0, 1}};
     return Matrix(grid) * translation(-from.x_, -from.y_, -from.z_);
 }
 

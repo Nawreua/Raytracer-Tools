@@ -100,6 +100,6 @@ TEST(IntersectionTest, HitShouldOffsetPoint)
     shape.transform_ = translation(0, 0, 1);
     auto i = Intersection(5, shape);
     i.prepare_hit(r);
-    ASSERT_LT(i.over_point_.z_, -EPSILON/2);
+    ASSERT_LT(i.over_point_.z_, -EPSILON / 2);
     ASSERT_GT(i.point_.z_, i.over_point_.z_);
 }

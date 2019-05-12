@@ -5,10 +5,10 @@
 std::vector<Intersection> World::intersect_world(const Ray& ray)
 {
     std::vector<Intersection> res;
-    for (auto object: objects_)
+    for (auto object : objects_)
     {
         auto xs = object->intersect(ray);
-        for (auto x: xs)
+        for (auto x : xs)
             res.push_back(x);
     }
     std::sort(res.begin(), res.end());
@@ -18,13 +18,11 @@ std::vector<Intersection> World::intersect_world(const Ray& ray)
 Color World::shade_hit(const Intersection& hit)
 {
     Color res{0.0, 0.0, 0.0};
-    std::for_each(lights_.begin(), lights_.end(),
-            [&](const PointLight& light) {
-            res += hit.object_->material_.lighting(*hit.object_,
-                    light, hit.point_,
-                    hit.eyev_, hit.normalv_,
-                    is_shadowed(hit.over_point_, light));
-            });
+    std::for_each(lights_.begin(), lights_.end(), [&](const PointLight& light) {
+        res += hit.object_->material_.lighting(
+            *hit.object_, light, hit.point_, hit.eyev_, hit.normalv_,
+            is_shadowed(hit.over_point_, light));
+    });
     return res;
 }
 

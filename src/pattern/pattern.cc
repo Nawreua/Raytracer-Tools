@@ -3,11 +3,10 @@
 #include "shape.hh"
 
 Pattern::Pattern()
-    :transform_(Matrix::identity_matrix())
-{ }
+    : transform_(Matrix::identity_matrix())
+{}
 
-Color Pattern::pattern_at_shape(const Shape& object,
-        const Tuple& world_point)
+Color Pattern::pattern_at_shape(const Shape& object, const Tuple& world_point)
 {
     auto object_point = object.transform_.inverse() * world_point;
     auto pattern_point = transform_.inverse() * object_point;
@@ -26,8 +25,8 @@ Color TestPattern::pattern_at(const Tuple& point)
 
 StripePattern::StripePattern(const Color& a, const Color& b)
     : a_(a)
-      ,b_(b)
-{ }
+    , b_(b)
+{}
 
 Color StripePattern::pattern_at(const Tuple& point)
 {
@@ -36,8 +35,8 @@ Color StripePattern::pattern_at(const Tuple& point)
 
 GradientPattern::GradientPattern(const Color& a, const Color& b)
     : a_(a)
-      ,b_(b)
-{ }
+    , b_(b)
+{}
 
 Color GradientPattern::pattern_at(const Tuple& point)
 {
@@ -48,8 +47,8 @@ Color GradientPattern::pattern_at(const Tuple& point)
 
 RingPattern::RingPattern(const Color& a, const Color& b)
     : a_(a)
-      ,b_(b)
-{ }
+    , b_(b)
+{}
 
 Color RingPattern::pattern_at(const Tuple& point)
 {
@@ -59,8 +58,8 @@ Color RingPattern::pattern_at(const Tuple& point)
 
 CheckersPattern::CheckersPattern(const Color& a, const Color& b)
     : a_(a)
-      ,b_(b)
-{ }
+    , b_(b)
+{}
 
 Color CheckersPattern::pattern_at(const Tuple& point)
 {
@@ -70,13 +69,13 @@ Color CheckersPattern::pattern_at(const Tuple& point)
 
 RadialGradientPattern::RadialGradientPattern(const Color& a, const Color& b)
     : a_(a)
-      ,b_(b)
-{ }
+    , b_(b)
+{}
 
 Color RadialGradientPattern::pattern_at(const Tuple& point)
 {
     auto distance = b_ - a_;
-    //auto fraction = point.x_ - floor(point.x_);
+    // auto fraction = point.x_ - floor(point.x_);
     int val = floor(sqrt(point.x_ * point.x_ + point.z_ * point.z_));
     return a_ + distance * val;
 }

@@ -5,14 +5,14 @@
 
 class Ray
 {
-    public:
-        Ray() = default;
-        Ray(Tuple origin, Tuple direction);
+public:
+    Ray() = default;
+    Ray(Tuple origin, Tuple direction);
 
-        Tuple position(float t) const;
+    Tuple position(float t) const;
 
-        Ray transform(const Matrix& m) const;
+    Ray transform(const Matrix& m) const;
 
-        Tuple origin_;
-        Tuple direction_;
+    Tuple origin_;
+    Tuple direction_;
 };

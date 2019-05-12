@@ -6,10 +6,12 @@ namespace
     {
         return abs(a - b) < EPSILON;
     }
-}
+} // namespace
 
 Color::Color(float red, float green, float blue)
-    : red_(red), green_(green), blue_(blue)
+    : red_(red)
+    , green_(green)
+    , blue_(blue)
 {}
 
 Color& Color::operator+=(const Color& rhs)

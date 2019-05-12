@@ -8,73 +8,73 @@ class Shape;
 
 class Pattern
 {
-    public:
-        Pattern();
-        
-        virtual Color pattern_at(const Tuple& point) = 0;
-        Color pattern_at_shape(const Shape& object, const Tuple& world_point);
-        void set_pattern_transform(const Matrix& t);
+public:
+    Pattern();
 
-        Matrix transform_;
+    virtual Color pattern_at(const Tuple& point) = 0;
+    Color pattern_at_shape(const Shape& object, const Tuple& world_point);
+    void set_pattern_transform(const Matrix& t);
+
+    Matrix transform_;
 };
 
-class TestPattern: public Pattern
+class TestPattern : public Pattern
 {
-    public:
-        Color pattern_at(const Tuple& point) override;
+public:
+    Color pattern_at(const Tuple& point) override;
 };
 
-class StripePattern: public Pattern
+class StripePattern : public Pattern
 {
-    public:
-        StripePattern(const Color& a, const Color& b);
+public:
+    StripePattern(const Color& a, const Color& b);
 
-        Color pattern_at(const Tuple& point) override;
+    Color pattern_at(const Tuple& point) override;
 
-        Color a_;
-        Color b_;
+    Color a_;
+    Color b_;
 };
 
-class GradientPattern: public Pattern
+class GradientPattern : public Pattern
 {
-    public:
-        GradientPattern(const Color& a, const Color& b);
+public:
+    GradientPattern(const Color& a, const Color& b);
 
-        Color pattern_at(const Tuple& point) override;
+    Color pattern_at(const Tuple& point) override;
 
-        Color a_;
-        Color b_;
+    Color a_;
+    Color b_;
 };
 
-class RingPattern: public Pattern
+class RingPattern : public Pattern
 {
-    public:
-        RingPattern(const Color& a, const Color& b);
+public:
+    RingPattern(const Color& a, const Color& b);
 
-        Color pattern_at(const Tuple& point) override;
+    Color pattern_at(const Tuple& point) override;
 
-        Color a_;
-        Color b_;
+    Color a_;
+    Color b_;
 };
 
-class CheckersPattern: public Pattern
+class CheckersPattern : public Pattern
 {
-    public:
-        CheckersPattern(const Color& a, const Color& b);
+public:
+    CheckersPattern(const Color& a, const Color& b);
 
-        Color pattern_at(const Tuple& point) override;
+    Color pattern_at(const Tuple& point) override;
 
-        Color a_;
-        Color b_;
+    Color a_;
+    Color b_;
 };
 
-class RadialGradientPattern: public Pattern
+class RadialGradientPattern : public Pattern
 {
-    public:
-        RadialGradientPattern(const Color& a, const Color& b);
+public:
+    RadialGradientPattern(const Color& a, const Color& b);
 
-        Color pattern_at(const Tuple& point) override;
+    Color pattern_at(const Tuple& point) override;
 
-        Color a_;
-        Color b_;
+    Color a_;
+    Color b_;
 };

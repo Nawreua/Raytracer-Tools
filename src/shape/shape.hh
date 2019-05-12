@@ -9,30 +9,30 @@
 
 class Shape
 {
-    public:
-        Shape();
+public:
+    Shape();
 
-        std::vector<Intersection> intersect(const Ray& ray);
-        Tuple normal_at(const Tuple& p);
+    std::vector<Intersection> intersect(const Ray& ray);
+    Tuple normal_at(const Tuple& p);
 
-        virtual std::vector<Intersection> local_intersect(const Ray& ray) = 0;
-        virtual Tuple local_normal_at(const Tuple& p) = 0;
+    virtual std::vector<Intersection> local_intersect(const Ray& ray) = 0;
+    virtual Tuple local_normal_at(const Tuple& p) = 0;
 
-        void set_transform(const Matrix& t);
+    void set_transform(const Matrix& t);
 
-        Material material_;
-        Matrix transform_;
+    Material material_;
+    Matrix transform_;
 };
 
 bool operator==(const Shape& lhs, const Shape& rhs);
 
-class TestShape: public Shape
+class TestShape : public Shape
 {
-    public:
-        TestShape() = default;
+public:
+    TestShape() = default;
 
-        std::vector<Intersection> local_intersect(const Ray& ray) override;
-        Tuple local_normal_at(const Tuple& p) override;
+    std::vector<Intersection> local_intersect(const Ray& ray) override;
+    Tuple local_normal_at(const Tuple& p) override;
 
-        Ray saved_ray_;
+    Ray saved_ray_;
 };

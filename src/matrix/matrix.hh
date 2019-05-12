@@ -10,35 +10,35 @@
 
 class Matrix
 {
-    public:
-        Matrix();
-        Matrix(const Matrix& m);
-        Matrix(Matrix& m);
-        Matrix(size_t height, size_t width);
-        explicit Matrix(float grid[2][2]);
-        explicit Matrix(float grid[3][3]);
-        explicit Matrix(float grid[4][4]);
+public:
+    Matrix();
+    Matrix(const Matrix& m);
+    Matrix(Matrix& m);
+    Matrix(size_t height, size_t width);
+    explicit Matrix(float grid[2][2]);
+    explicit Matrix(float grid[3][3]);
+    explicit Matrix(float grid[4][4]);
 
-        Matrix transpose() const;
-        float determinant() const;
-        Matrix submatrix(size_t row, size_t col) const;
-        float minor(size_t row, size_t col) const;
-        float cofactor(size_t row, size_t col) const;
-        
-        bool is_invertible() const;
-        Matrix inverse() const;
+    Matrix transpose() const;
+    float determinant() const;
+    Matrix submatrix(size_t row, size_t col) const;
+    float minor(size_t row, size_t col) const;
+    float cofactor(size_t row, size_t col) const;
 
-        // BEWARE: Only 4*4 identity matrix
-        static Matrix identity_matrix();
+    bool is_invertible() const;
+    Matrix inverse() const;
 
-        std::vector<float>& operator[](size_t i);
-        const std::vector<float>& operator[](size_t i) const;
+    // BEWARE: Only 4*4 identity matrix
+    static Matrix identity_matrix();
 
-        size_t height_;
-        size_t width_;
+    std::vector<float>& operator[](size_t i);
+    const std::vector<float>& operator[](size_t i) const;
 
-    private:
-        std::vector<std::vector<float>> grid_;
+    size_t height_;
+    size_t width_;
+
+private:
+    std::vector<std::vector<float>> grid_;
 };
 
 bool operator==(const Matrix& A, const Matrix& B);
