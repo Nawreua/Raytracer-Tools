@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
@@ -10,7 +11,7 @@ project ("The RayTracer Challenge")
 
 include_directories(src src/tuple src/colors src/canvas src/matrix src/ray
     src/sphere src/intersection src/light src/material src/world
-    src/camera src/shape src/plane)
+    src/camera src/shape src/plane src/pattern)
 add_subdirectory(src)
 add_subdirectory(offside)
 set(LIBS ${LIBS} tuple)
@@ -26,6 +27,7 @@ set(LIBS ${LIBS} material)
 set(LIBS ${LIBS} world)
 set(LIBS ${LIBS} camera)
 set(LIBS ${LIBS} plane)
+set(LIBS ${LIBS} pattern)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})

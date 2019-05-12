@@ -20,7 +20,8 @@ Color World::shade_hit(const Intersection& hit)
     Color res{0.0, 0.0, 0.0};
     std::for_each(lights_.begin(), lights_.end(),
             [&](const PointLight& light) {
-            res += hit.object_->material_.lighting(light, hit.point_,
+            res += hit.object_->material_.lighting(*hit.object_,
+                    light, hit.point_,
                     hit.eyev_, hit.normalv_,
                     is_shadowed(hit.over_point_, light));
             });

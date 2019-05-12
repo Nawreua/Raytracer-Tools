@@ -12,6 +12,7 @@ class Camera
 
         Ray ray_for_pixel(size_t px, size_t py);
         Canvas render(World& world);
+        Canvas render_and_report(World& world);
 
         size_t hsize_;
         size_t vsize_;

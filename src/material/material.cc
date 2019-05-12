@@ -10,13 +10,17 @@ namespace
 
 Material::Material()
     : color_(Color(1, 1, 1)), ambient_(0.1), diffuse_(0.9), specular_(0.9),
-    shininess_(200)
+    shininess_(200), pattern_(nullptr)
 {}
 
-Color Material::lighting(const PointLight& light, const Tuple& point,
-                    const Tuple& eyev, const Tuple& normalv, bool in_shadow)
+Color Material::lighting(const Shape& object, const PointLight& light,
+        const Tuple& point, const Tuple& eyev, const Tuple& normalv,
+        bool in_shadow)
 {
-    auto effective_color = color_ * light.intensity_;
+    auto& color = color_;
+    if (pattern_)
+        color_ = pattern_->pattern_at_shape(object, point);
+    auto effective_color = color * light.intensity_;
     auto lightv = (light.position_ - point).normalize();
 
     auto ambient = effective_color * ambient_;

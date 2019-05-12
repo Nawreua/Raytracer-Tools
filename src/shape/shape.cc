@@ -2,15 +2,8 @@
 
 Shape::Shape()
     : material_(Material())
-{
-    float grid[][4] = {
-        {1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1}
-    };
-    transform_ = Matrix(grid);
-}
+      ,transform_(Matrix::identity_matrix())
+{ }
 
 std::vector<Intersection> Shape::intersect(const Ray& ray)
 {

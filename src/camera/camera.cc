@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "camera.hh"
 
 Camera::Camera(size_t hsize, size_t vsize, float field_of_view)
@@ -46,5 +48,25 @@ Canvas Camera::render(World& world)
             image.write_pixel(x, y, color);
         }
 
+    return image;
+}
+
+Canvas Camera::render_and_report(World& world)
+{
+    auto image = Canvas(hsize_, vsize_);
+
+    float count = 0;
+    for (size_t y = 0; y < vsize_; y++)
+        for (size_t x = 0; x < hsize_; x++)
+        {
+            auto ray = ray_for_pixel(x, y);
+            auto color = world.color_at(ray);
+            image.write_pixel(x, y, color);
+            std::cout
+                << ((count++)/ static_cast<float>(vsize_ * hsize_)) * 100
+                << "%\r";
+        }
+
+    std::cout << "100%\n";
     return image;
 }
