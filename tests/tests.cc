@@ -14,6 +14,7 @@
 #include "tests_world.cc"
 #include "tests_camera.cc"
 #include "tests_plane.cc"
+#include "tests_pattern.cc"
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
