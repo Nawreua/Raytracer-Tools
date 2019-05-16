@@ -46,6 +46,14 @@ Color& Color::operator*=(const Color& rhs)
     return *this;
 }
 
+Color& Color::operator/=(int rhs)
+{
+    red_ /= rhs;
+    green_ /= rhs;
+    blue_ /= rhs;
+    return *this;
+}
+
 Color Color::black()
 {
     return Color(0, 0, 0);
@@ -75,6 +83,11 @@ Color operator*(Color lhs, float rhs)
 Color operator*(Color lhs, const Color& rhs)
 {
     return lhs *= rhs;
+}
+
+Color operator/(Color lhs, int rhs)
+{
+    return lhs /= rhs;
 }
 
 Color color(float red, float green, float blue)

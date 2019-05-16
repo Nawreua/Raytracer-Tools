@@ -13,6 +13,7 @@ struct Color
     Color& operator-=(const Color& rhs);
     Color& operator*=(float rhs);
     Color& operator*=(const Color& rhs);
+    Color& operator/=(int rhs);
 
     static Color black();
 
@@ -27,5 +28,6 @@ Color operator+(Color lhs, const Color& rhs);
 Color operator-(Color lhs, const Color& rhs);
 Color operator*(Color lhs, float rhs);
 Color operator*(Color lhs, const Color& rhs);
+Color operator/(Color lhs, int rhs);
 
 Color color(float red, float green, float blue);
