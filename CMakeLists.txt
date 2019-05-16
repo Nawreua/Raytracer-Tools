@@ -21,15 +21,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -fsanitize=address --cove
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# INCLUDE
-include_directories(src src/tuple src/colors src/canvas src/matrix src/ray
-    src/sphere src/intersection src/light src/material src/world
-    src/camera src/shape src/plane src/pattern)
-
 # LIBRARIES
-set(LIBS ${LIBS} CACHE INTERNAL "")
-
-add_subdirectory(src)
+add_subdirectory(lib)
 add_subdirectory(offside)
 
 # TESTS
@@ -54,7 +47,7 @@ if(GTest_FOUND)
     "tests/tests_tuple.cc"
     "tests/tests_world.cc"
     "tests/tests.cc")
-  target_link_libraries(check PRIVATE ${LIBS} GTest::GTest)
+  target_link_libraries(check PRIVATE Raytracer::core GTest::GTest)
   set_target_properties(check
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
