@@ -1,6 +1,9 @@
 # SETUP
 cmake_minimum_required(VERSION 3.12)
-project("The RayTracer Challenge")
+project("The RayTracer Challenge"
+        VERSION 0.9
+        DESCRIPTION "A collection of raytracing tools"
+        LANGUAGES CXX)
 
 # BUILD OPTIONS
 set(CMAKE_CXX_COMPILER "g++")

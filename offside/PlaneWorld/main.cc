@@ -76,7 +76,7 @@ int main()
 
     world.objects_.push_back(left);
 
-    auto camera = Camera(100, 100, PI / 2);
+    auto camera = Camera(1920, 1080, PI / 2);
     camera.transform_ =
         view_transform(point(0, 1.5, -3), point(0, 1, 0), vector(0, 1, 0));
 
