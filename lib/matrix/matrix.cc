@@ -2,7 +2,7 @@
 
 namespace
 {
-    bool equal(float a, float b)
+    constexpr inline bool equal(float a, float b)
     {
         return abs(a - b) < EPSILON;
     }
@@ -12,7 +12,8 @@ Matrix::Matrix()
     : height_(4)
     , width_(4)
 {
-    grid_ = std::vector<std::vector<float>>(4);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(4);
     for (size_t i = 0; i < 4; i++)
     {
         grid_[i].resize(4);
@@ -25,7 +26,8 @@ Matrix::Matrix(const Matrix& m)
     : height_(m.height_)
     , width_(m.width_)
 {
-    grid_ = std::vector<std::vector<float>>(m.height_);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(m.height_);
     for (size_t i = 0; i < m.height_; i++)
     {
         grid_[i].resize(m.width_);
@@ -38,7 +40,8 @@ Matrix::Matrix(Matrix& m)
     : height_(m.height_)
     , width_(m.width_)
 {
-    grid_ = std::vector<std::vector<float>>(m.height_);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(m.height_);
     for (size_t i = 0; i < m.height_; i++)
     {
         grid_[i].resize(m.width_);
@@ -51,7 +54,8 @@ Matrix::Matrix(size_t height, size_t width)
     : height_(height)
     , width_(width)
 {
-    grid_ = std::vector<std::vector<float>>(height);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(height);
     for (size_t i = 0; i < height; i++)
     {
         grid_[i].resize(width);
@@ -64,7 +68,8 @@ Matrix::Matrix(float grid[2][2])
     : height_(2)
     , width_(2)
 {
-    grid_ = std::vector<std::vector<float>>(2);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(2);
     for (size_t i = 0; i < 2; i++)
     {
         grid_[i].resize(2);
@@ -77,7 +82,8 @@ Matrix::Matrix(float grid[3][3])
     : height_(3)
     , width_(3)
 {
-    grid_ = std::vector<std::vector<float>>(3);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(3);
     for (size_t i = 0; i < 3; i++)
     {
         grid_[i].resize(3);
@@ -90,7 +96,8 @@ Matrix::Matrix(float grid[4][4])
     : height_(4)
     , width_(4)
 {
-    grid_ = std::vector<std::vector<float>>(4);
+    grid_ = std::vector<std::vector<float>>();
+    grid_.resize(4);
     for (size_t i = 0; i < 4; i++)
     {
         grid_[i].resize(4);

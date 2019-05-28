@@ -89,6 +89,8 @@ public:
     Color color_;
 };
 
+/*
+ * FIXME
 class BlendedPattern : public Pattern
 {
 public:
@@ -99,3 +101,4 @@ public:
     Pattern* a_;
     Pattern* b_;
 };
+*/

@@ -90,6 +90,7 @@ Color SolidPattern::pattern_at(const Tuple&) const
     return color_;
 }
 
+/*
 BlendedPattern::BlendedPattern(Pattern& a, Pattern& b)
     : a_(&a)
     , b_(&b)
@@ -101,3 +102,4 @@ Color BlendedPattern::pattern_at(const Tuple& point) const
     auto color_b = b_->pattern_at(point);
     return (color_a + color_b) / 2;
 }
+*/

@@ -2,7 +2,7 @@
 
 namespace
 {
-    bool equal(float a, float b)
+    constexpr inline bool equal(float a, float b)
     {
         return abs(a - b) < EPSILON;
     }
