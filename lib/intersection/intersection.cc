@@ -29,6 +29,7 @@ void Intersection::prepare_hit(const Ray& ray)
         normalv_ = -normalv_;
     }
     over_point_ = point_ + normalv_ * EPSILON;
+    reflectv_ = ray.direction_.reflect(normalv_);
 }
 
 bool operator<(const Intersection& lhs, const Intersection& rhs)

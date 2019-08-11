@@ -96,3 +96,16 @@ TEST(MaterialTest, LightingWithPatternApplied)
     ASSERT_EQ(c1, Color(1, 1, 1));
     ASSERT_EQ(c2, Color(0, 0, 0));
 }
+
+TEST(MaterialTest, ReflectivityDefaultMaterial)
+{
+    auto m = Material();
+    ASSERT_FLOAT_EQ(m.reflective_, 0.0);
+}
+
+TEST(MaterialTest, TransparencyAndRefractiveIndexDefaultMaterial)
+{
+    auto m = Material();
+    ASSERT_FLOAT_EQ(m.transparency_, 0.0);
+    ASSERT_FLOAT_EQ(m.refractive_index_, 1.0);
+}

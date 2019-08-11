@@ -34,6 +34,8 @@ public:
     std::vector<float>& operator[](size_t i);
     const std::vector<float>& operator[](size_t i) const;
 
+    Matrix& operator=(const Matrix&) = default;
+
     size_t height_;
     size_t width_;
 

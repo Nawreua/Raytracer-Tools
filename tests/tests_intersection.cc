@@ -103,3 +103,12 @@ TEST(IntersectionTest, HitShouldOffsetPoint)
     ASSERT_LT(i.over_point_.z_, -EPSILON / 2);
     ASSERT_GT(i.point_.z_, i.over_point_.z_);
 }
+
+TEST(IntersectionTest, PrecomputingReflectionVector)
+{
+    auto shape = Plane();
+    auto r = Ray(point(0, 1, -1), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto i = Intersection(sqrt(2), shape);
+    i.prepare_hit(r);
+    ASSERT_EQ(i.reflectv_, vector(0, sqrt(2) / 2, sqrt(2) / 2));
+}

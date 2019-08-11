@@ -14,6 +14,9 @@ Material::Material()
     , diffuse_(0.9)
     , specular_(0.9)
     , shininess_(200)
+    , reflective_(0.0)
+    , transparency_(0.0)
+    , refractive_index_(1.0)
     , pattern_(nullptr)
 {}
 
@@ -63,5 +66,8 @@ bool operator==(const Material& lhs, const Material& rhs)
     return lhs.color_ == rhs.color_ && equal(lhs.ambient_, rhs.ambient_)
         && equal(lhs.diffuse_, rhs.diffuse_)
         && equal(lhs.specular_, rhs.specular_)
-        && equal(lhs.shininess_, rhs.shininess_);
+        && equal(lhs.shininess_, rhs.shininess_)
+        && equal(lhs.reflective_, rhs.reflective_)
+        && equal(lhs.transparency_, rhs.transparency_)
+        && equal(lhs.refractive_index_, rhs.refractive_index_);
 }

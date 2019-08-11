@@ -33,6 +33,15 @@ Tuple Sphere::local_normal_at(const Tuple& world_point)
     return object_normal;
 }
 
+Sphere Sphere::glass_sphere()
+{
+    auto sphere = Sphere();
+    sphere.transform_ = Matrix::identity_matrix();
+    sphere.material_.transparency_ = 1.0;
+    sphere.material_.refractive_index_ = 1.5;
+    return sphere;
+}
+
 /*
 bool operator==(const Sphere& lhs, const Sphere& rhs)
 {

@@ -23,6 +23,9 @@ public:
     float diffuse_;
     float specular_;
     float shininess_;
+    float reflective_;
+    float transparency_;
+    float refractive_index_;
     std::shared_ptr<Pattern> pattern_;
 };
 

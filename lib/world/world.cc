@@ -15,25 +15,37 @@ std::vector<Intersection> World::intersect_world(const Ray& ray)
     return res;
 }
 
-Color World::shade_hit(const Intersection& hit)
+Color World::shade_hit(const Intersection& hit, int remaining)
 {
     Color res{0.0, 0.0, 0.0};
     std::for_each(lights_.begin(), lights_.end(), [&](const PointLight& light) {
         res += hit.object_->material_.lighting(
-            *hit.object_, light, hit.point_, hit.eyev_, hit.normalv_,
-            is_shadowed(hit.over_point_, light));
+                   *hit.object_, light, hit.point_, hit.eyev_, hit.normalv_,
+                   is_shadowed(hit.over_point_, light))
+            + reflected_color(hit, remaining);
     });
     return res;
 }
 
-Color World::color_at(const Ray& ray)
+Color World::color_at(const Ray& ray, int remaining)
 {
     auto xs = intersect_world(ray);
     auto h = hit(xs);
     if (!h.first)
         return Color(0.0, 0.0, 0.0);
     h.second.prepare_hit(ray);
-    return shade_hit(h.second);
+    return shade_hit(h.second, remaining);
+}
+
+Color World::reflected_color(const Intersection& hit, int remaining)
+{
+    if (remaining < 1)
+        return Color::black();
+    if (hit.object_->material_.reflective_ == 0.0)
+        return Color::black();
+    auto reflect_ray = Ray(hit.over_point_, hit.reflectv_);
+    return color_at(reflect_ray, remaining - 1)
+        * hit.object_->material_.reflective_;
 }
 
 bool World::is_shadowed(const Tuple& point, const PointLight& light)

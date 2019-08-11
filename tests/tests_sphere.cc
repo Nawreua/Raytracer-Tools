@@ -134,3 +134,11 @@ TEST(SphereTest, NormalOnScaledSphere)
     auto n = s.normal_at(point(0, sqrt(2) / 2, -sqrt(2) / 2));
     ASSERT_EQ(n, vector(0, 0.97014, -0.24254));
 }
+
+TEST(SphereTest, HelperForProducingSphereWithGlassyMaterial)
+{
+    auto s = Sphere::glass_sphere();
+    ASSERT_EQ(s.transform_, Matrix::identity_matrix());
+    ASSERT_FLOAT_EQ(s.material_.transparency_, 1.0);
+    ASSERT_FLOAT_EQ(s.material_.refractive_index_, 1.5);
+}

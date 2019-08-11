@@ -128,3 +128,72 @@ TEST(WorldTest, ShadeHitGivenIntersectionShadow)
     auto c = w.shade_hit(i);
     ASSERT_EQ(c, Color(0.1, 0.1, 0.1));
 }
+
+TEST(WorldTest, ReflectedColorForNonreflectiveMaterial)
+{
+    auto w = World::default_world();
+    auto r = Ray(point(0, 0, 0), vector(0, 0, 1));
+    w.objects_[1]->material_.ambient_ = 1;
+    auto i = Intersection(1, *w.objects_[1]);
+    i.prepare_hit(r);
+    auto color = w.reflected_color(i);
+    ASSERT_EQ(color, Color(0, 0, 0));
+}
+
+TEST(WorldTest, ReflectedColorForReflectiveMaterial)
+{
+    auto w = World::default_world();
+    auto shape = std::make_shared<Plane>();
+    shape->material_.reflective_ = 0.5;
+    shape->transform_ = translation(0, -1, 0);
+    w.objects_.push_back(shape);
+    auto r = Ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto i = Intersection(sqrt(2), *shape);
+    i.prepare_hit(r);
+    auto color = w.reflected_color(i);
+    ASSERT_EQ(color, Color(0.19032, 0.2379, 0.14274));
+}
+
+TEST(WorldTest, ShadeHitWithReflectiveMaterial)
+{
+    auto w = World::default_world();
+    auto shape = std::make_shared<Plane>();
+    shape->material_.reflective_ = 0.5;
+    shape->transform_ = translation(0, -1, 0);
+    w.objects_.push_back(shape);
+    auto r = Ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto i = Intersection(sqrt(2), *shape);
+    i.prepare_hit(r);
+    auto color = w.shade_hit(i);
+    ASSERT_EQ(color, Color(0.87677, 0.92436, 0.82918));
+}
+
+TEST(WorldTest, ColorAtWithMutuallyReflectiveSurfaces)
+{
+    auto w = World();
+    w.lights_.push_back(PointLight(point(0, 0, 0), Color(1, 1, 1)));
+    auto lower = std::make_shared<Plane>();
+    lower->material_.reflective_ = 1;
+    lower->set_transform(translation(0, -1, 0));
+    w.objects_.push_back(lower);
+    auto upper = std::make_shared<Plane>();
+    upper->material_.reflective_ = 1;
+    upper->transform_ = translation(0, 1, 0);
+    w.objects_.push_back(upper);
+    auto r = Ray(point(0, 0, 0), vector(0, 1, 0));
+    w.color_at(r);
+}
+
+TEST(WorldTest, ReflectedColorAtMaximumRecursiveDepth)
+{
+    auto w = World::default_world();
+    auto shape = std::make_shared<Plane>();
+    shape->material_.reflective_ = 0.5;
+    shape->transform_ = translation(0, -1, 0);
+    w.objects_.push_back(shape);
+    auto r = Ray(point(0, 0, -3), vector(0, -sqrt(2) / 2, sqrt(2) / 2));
+    auto i = Intersection(sqrt(2), *shape);
+    i.prepare_hit(r);
+    auto color = w.reflected_color(i, 0);
+    ASSERT_EQ(color, Color(0, 0, 0));
+}

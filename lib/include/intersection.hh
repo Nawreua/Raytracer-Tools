@@ -24,6 +24,7 @@ public:
     Tuple over_point_;
     Tuple eyev_;
     Tuple normalv_;
+    Tuple reflectv_;
     bool inside_;
 };
 
