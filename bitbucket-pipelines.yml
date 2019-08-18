@@ -1,9 +1,10 @@
-image: gcc:6.5
+image: gcc:latest
 pipelines:
   default:
     - step:
-        - 'apt-get update && apt-get install -y cmake googletest'
-        - 'mkdir _build && cd _build'
-        - 'cmake ..'
-        - 'make check'
-        - ./check
+        script:
+          - 'apt-get update && apt-get install -y cmake libgtest-dev'
+          - 'mkdir _build && cd _build'
+          - 'cmake ..'
+          - 'make check'
+          - ./check
