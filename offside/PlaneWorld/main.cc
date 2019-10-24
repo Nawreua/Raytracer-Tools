@@ -22,10 +22,9 @@ int main()
     floor->set_transform(scaling(10, 0.01, 10));
     floor->material_ = Material();
     floor->material_.color_ = Color(1, 0.9, 0.9);
-    floor->material_.pattern_ = std::make_shared<RadialGradientPattern>(
-        RadialGradientPattern(floor->material_.color_, Color(0.5, 0.5, 0.5)));
-    floor->material_.pattern_->set_pattern_transform(translation(1.5, 0.5, -0.5)
-                                                     * rotation_y(30));
+    floor->material_.reflective_ = 0.5;
+    floor->material_.pattern_ =
+        std::make_shared<CheckersPattern>(Color(1, 1, 1), Color::black());
     floor->material_.specular_ = 0;
 
     world.objects_.push_back(floor);
@@ -34,6 +33,8 @@ int main()
     left_wall->set_transform(translation(0, 0, 5) * rotation_y(-PI / 4)
                              * rotation_x(PI / 2) * scaling(10, 0.1, 10));
     left_wall->material_ = floor->material_;
+    left_wall->material_.pattern_ =
+        std::make_shared<StripePattern>(Color(0.5, 0.5, 0.5), Color::black());
 
     world.objects_.push_back(left_wall);
 
@@ -41,20 +42,21 @@ int main()
     right_wall->set_transform(translation(0, 0, 5) * rotation_y(PI / 4)
                               * rotation_x(PI / 2) * scaling(10, 0.1, 10));
     right_wall->material_ = floor->material_;
+    right_wall->material_.pattern_ =
+        std::make_shared<StripePattern>(Color::black(), Color(0.5, 0.5, 0.5));
 
     world.objects_.push_back(right_wall);
 
     auto middle = std::make_shared<Sphere>();
     middle->set_transform(translation(-0.5, 1, 0.5));
     middle->material_ = Material();
-    middle->material_.color_ = Color(0.1, 1, 0.5);
-    middle->material_.pattern_ = std::make_shared<StripePattern>(
-        StripePattern(middle->material_.color_, Color(1, 0, 0)));
+    middle->material_.color_ = Color(1, 0, 0);
     middle->material_.diffuse_ = 0.7;
     middle->material_.specular_ = 0.3;
 
     world.objects_.push_back(middle);
 
+    /*
     auto right = std::make_shared<Sphere>();
     right->set_transform(translation(1.5, 0.5, -0.5) * scaling(0.5, 0.5, 0.5));
     right->material_ = Material();
@@ -75,6 +77,7 @@ int main()
     left->material_.specular_ = 0.3;
 
     world.objects_.push_back(left);
+    */
 
     auto camera = Camera(1920, 1080, PI / 2);
     camera.transform_ =

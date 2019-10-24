@@ -70,7 +70,7 @@ int main()
     camera.transform_ =
         view_transform(point(0, 1.5, -3), point(0, 1, 0), vector(0, 1, 0));
 
-    auto canvas = camera.render(world);
+    auto canvas = camera.render_and_report(world);
 
     std::ofstream f("3DSphere.ppm");
     if (f.is_open())
